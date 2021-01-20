@@ -1,0 +1,44 @@
+---
+- name: Create default github release api url
+  set_fact:
+    api_url: "https://api.github.com/repos/{{ gnome.theme.git_path }}/releases/latest"
+
+- name: Get github release info
+  ansible.builtin.uri:
+    url: "{{api_url}}"
+    return_content: yes
+    body_format: json
+  register: release_info
+
+- name: Create directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ temp_dir }}/theme/"
+    state: directory
+    mode: 0755
+
+- name: Download github release
+  ansible.builtin.get_url:
+    url: "{{ release_info.json.zipball_url }}"
+    dest: "{{ temp_dir }}/theme/"
+    mode: 0755
+  register: downloaded_file
+
+- name: Extract theme
+  ansible.builtin.unarchive:
+    src: "{{ downloaded_file.dest }}"
+    dest: "{{ temp_dir }}/theme/"
+
+- name: Find install script
+  ansible.builtin.find:
+    paths: "{{ temp_dir }}/theme/"
+    patterns: "{{ gnome.theme.install_script }}"
+    recurse: yes
+  register: find_install_script
+
+- name: Run install script
+  command: "{{ find_install_script.files[0].path }}"
+
+- name: Clean artifact path
+  ansible.builtin.file:
+    state: absent
+    path: "{{ temp_dir }}/theme/"

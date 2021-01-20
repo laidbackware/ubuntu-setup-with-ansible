@@ -1,0 +1,23 @@
+- name: Add Code GPG Key
+  become: yes
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Add Code Apt repo
+  become: yes
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/code stable main
+    state: present
+    filename: vscode
+    update_cache: yes
+
+- name: Install Code Apt Package
+  become: yes
+  ansible.builtin.apt: 
+    name: code
+    state: present
+
+- name: Install Visual Studio Code Extensions
+  command: code --install-extension "{{ item }}"
+  loop: "{{ dev.vscode_extensions }}"

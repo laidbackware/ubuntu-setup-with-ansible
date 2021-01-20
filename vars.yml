@@ -1,0 +1,68 @@
+---
+dev:
+  git:
+    email: proudmatt@gmail.com
+    name: Matt Proud
+  vscode_extensions: # Can be removed
+    - shan.code-settings-sync
+
+# If this section is removed no GUI based apps will be installed
+gnome: # Can be removed
+  extensions: # Can be removed
+    - name: arcmenu@arcmenu.com
+      settings_path: /.local/share/arcmenu/stylesheet.css
+    - name: dash-to-panel@jderose9.github.com
+      settings_path: .local/share/gnome-shell/extensions/dash-to-panel@jderose9.github.com/dash-to-panel-stylesheet.css
+    - name: horizontal-workspaces@gnome-shell-extensions.gcampax.github.com
+  theme: # Can be removed
+    git_path: vinceliuice/Canta-theme
+    install_script: install.sh
+
+apt:
+  repositories:
+    - ppa:papirus/papirus
+    - ppa:agornostal/ulauncher
+    - ppa:solaar-unifying/stable
+  packages:
+    - htop
+    - gdebi
+    - tree
+    - jq
+    - chrome-gnome-shell
+    - deepin-terminal    
+    - gnome-tweaks
+    - gettext
+    - libgettextpo-dev
+    - gnome-shell-extensions
+    - gnome-tweak-tool
+    - gnome-menus
+    - gir1.2-gmenu-3.0
+    - papirus-icon-theme # Icons
+    - lastpass-cli
+    - direnv
+    - vlc
+    - gthumb
+    - cheese
+    - flameshot # screenshot
+    - peek # gif screen recorder
+    - nemo # file manager
+    - qdirstat # treesize
+    - xarchiver # zip/7zip
+    - v4l-utils # Webcam util
+    - golang-go
+    - default-jre
+    - solaar
+    - steam
+    - remmina
+    - ulauncher
+    - snapd
+    - golang-docker-credential-helpers
+    - docker-compose
+    - ssh
+    - pssh
+    - nautilus
+    - bashtop
+  packages_deb: # Can be removed
+    # - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - https://zoom.us/client/latest/zoom_amd64.deb
+    - https://releases.hyper.is/download/deb

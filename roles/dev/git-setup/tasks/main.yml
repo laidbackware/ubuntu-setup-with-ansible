@@ -1,0 +1,5 @@
+---
+- name: Setup git config
+  template:
+    src: .gitconfig
+    dest: "{{ home_dir }}/.gitconfig"

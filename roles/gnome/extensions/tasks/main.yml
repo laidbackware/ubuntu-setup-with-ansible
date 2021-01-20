@@ -1,0 +1,4 @@
+---
+- name: Loop Extensions
+  include_tasks: add-shell-extension.yml
+  loop: "{{ gnome.extensions }}"

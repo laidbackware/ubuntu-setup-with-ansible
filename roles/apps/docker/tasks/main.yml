@@ -1,0 +1,46 @@
+---
+- name: Install docker packages
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+    update_cache: yes
+  # with_items:
+  #   - apt-transport-https
+  #   - ca-certificates
+  #   - curl
+  #   - software-properties-common
+
+- name: Add Dockers official GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Verify that we have the key with the fingerprint
+  ansible.builtin.apt_key:
+    id: 0EBFCD88
+    state: present
+
+- name: Set up the stable repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+    state: present
+    update_cache: yes
+
+- name: Install docker
+  ansible.builtin.apt:
+    name: docker-ce
+    state: present
+
+- name: Add user to "docker" group
+  user:
+    name: "{{user}}"
+    group: "docker"
+    append: yes
+
+- name: Refresh group membership
+  become: no
+  command: newgrp docker 

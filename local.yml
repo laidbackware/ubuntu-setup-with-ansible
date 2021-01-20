@@ -1,0 +1,51 @@
+---
+- hosts: localhost
+  # become: true
+  gather_facts: False
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - name: Create the temporary directory
+      tempfile:
+        state: directory
+        suffix: setup
+      register: temp_dir_results
+    
+    - set_fact:
+        temp_dir={{ temp_dir_results.path }}
+
+    - set_fact:
+        home_dir={{ lookup('env', 'HOME') }}
+
+    - set_fact:
+        user={{ lookup('env', 'USER') }}
+
+  roles:
+    # - role: apt-packages
+    #   become: yes
+
+    - role: dev/git-setup
+      when: dev.git is defined
+
+    - role: apps/docker
+      become: yes
+
+    - role: dev/vscode
+      when: gnome is defined
+      
+    - role: apps/hyper
+      when: gnome is defined
+
+    - role: gnome/extensions
+      when: gnome.extensions is defined
+
+    - role: gnome/theme
+      when: gnome.theme is defined
+
+  post_tasks:
+    - name: Remove the temporary directory
+      file:
+        path: "{{ temp_dir }}"
+        state: absent
+    
