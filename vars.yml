@@ -10,9 +10,11 @@ dev:
 gnome: # Can be removed
   extensions: # Can be removed
     - name: arcmenu@arcmenu.com
-      settings_path: /.local/share/arcmenu/stylesheet.css
+      settings_path: .local/share/arcmenu
+      settings_file: stylesheet.css
     - name: dash-to-panel@jderose9.github.com
-      settings_path: .local/share/gnome-shell/extensions/dash-to-panel@jderose9.github.com/dash-to-panel-stylesheet.css
+      settings_path: .local/share/gnome-shell/extensions/dash-to-panel@jderose9.github.com
+      settings_file: dash-to-panel-stylesheet.css
     - name: horizontal-workspaces@gnome-shell-extensions.gcampax.github.com
   theme: # Can be removed
     git_path: vinceliuice/Canta-theme
@@ -63,6 +65,6 @@ apt:
     - nautilus
     - bashtop
   packages_deb: # Can be removed
-    # - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - https://zoom.us/client/latest/zoom_amd64.deb
     - https://releases.hyper.is/download/deb

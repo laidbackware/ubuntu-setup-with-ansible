@@ -9,7 +9,7 @@
 - name: Install apt packages
   ansible.builtin.apt: 
     name: "{{ apt.packages }}"
-  # loop: "{{ apt.packages }}"
+    update_cache: yes
   when: "apt.packages is defined"
 
 - name: Install deb packages
