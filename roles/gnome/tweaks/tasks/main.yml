@@ -1,0 +1,16 @@
+---
+- name: Load Gnome Tweaks 
+  become_user: "{{user}}"
+  command: dconf load / < saved_settings.dconf
+
+- name: Restart Gnome Shell
+  command: "dbus-send --type=method_call --print-reply --dest=org.gnome.Shell /org/gnome/Shell org.gnome.Shell.Eval string:'global.reexec_self()'"
+  ignore_errors: yes
+
+- name: Wait 15 seconds for Gnome Shell to restart
+  wait_for:
+    timeout: 15
+
+# - name: Enable Extensions
+#   command: "gnome-extensions enable {{ item.name }}"
+#   loop: "{{ gnome.extensions }}"

@@ -3,24 +3,12 @@
   ansible.builtin.get_url: 
     url: "https://extensions.gnome.org/download-extension/{{ item.name }}.shell-extension.zip?shell_version=9.99.0"
     dest: "{{ temp_dir }}/{{ item.name }}.shell-extension.zip"
-    # mode: 666
 
 - name: Create directory if it does not exist
   ansible.builtin.file:
     path: "{{ home_dir }}/.local/share/gnome-shell/extensions/{{ item.name }}"
     state: directory
     mode: '0755'
-
-- name: "Extract {{ item.name }} to extensions dir"
-  ansible.builtin.unarchive:
-    src: "{{ temp_dir }}/{{ item.name }}.shell-extension.zip"
-    dest: "{{ home_dir }}/.local/share/gnome-shell/extensions/{{ item.name }}/"
-
-- name: Copy extension settings
-  copy:
-    src: "{{ item.name }}.css"
-    dest: "{{ home_dir }}/{{ item.settings_path }}"
-  when: item.settings_path is defined
 
 - name: "Enable {{ item.name }}"
   command: "gnome-extensions enable {{ item.name }}"
