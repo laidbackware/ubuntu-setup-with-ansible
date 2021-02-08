@@ -10,11 +10,7 @@ dev:
 gnome: # Can be removed
   extensions: # Can be removed
     - name: arcmenu@arcmenu.com
-      settings_path: .local/share/arcmenu
-      settings_file: stylesheet.css
     - name: dash-to-panel@jderose9.github.com
-      settings_path: .local/share/gnome-shell/extensions/dash-to-panel@jderose9.github.com
-      settings_file: dash-to-panel-stylesheet.css
     - name: horizontal-workspaces@gnome-shell-extensions.gcampax.github.com
   theme: # Can be removed
     git_path: vinceliuice/Canta-theme
