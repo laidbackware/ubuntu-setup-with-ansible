@@ -24,24 +24,28 @@
   roles:
     # - role: apt-packages
     #   become: yes
-
-    - role: dev/git-setup
-      when: dev.git is defined
-
-    - role: apps/docker
+    
+    - role: snaps
       become: yes
+      when: snaps is defined
 
-    - role: dev/vscode
-      when: gnome is defined
+    # - role: dev/git-setup
+    #   when: dev.git is defined
+
+    # - role: apps/docker
+    #   become: yes
+
+    # - role: dev/vscode
+    #   when: gnome is defined
       
-    - role: apps/hyper
-      when: gnome is defined
+    # - role: apps/hyper
+    #   when: gnome is defined
 
-    - role: gnome/extensions
-      when: gnome.extensions is defined
+    # - role: gnome/extensions
+    #   when: gnome.extensions is defined
 
-    - role: gnome/theme
-      when: gnome.theme is defined
+    # - role: gnome/theme
+    #   when: gnome.theme is defined
 
   post_tasks:
     - name: Remove the temporary directory

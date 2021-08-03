@@ -15,6 +15,12 @@ gnome: # Can be removed
   theme: # Can be removed
     git_path: vinceliuice/Canta-theme
     install_script: install.sh
+snaps:
+  - name: slack
+    classic: true
+  - name: powershell-preview
+    classic: true
+  - name: inkscape
 
 apt:
   repositories:
