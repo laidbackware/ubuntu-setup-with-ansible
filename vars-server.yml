@@ -1,0 +1,20 @@
+---
+dev:
+  git:
+    email: proudmatt@gmail.com
+    name: Matt Proud
+
+apt:
+  packages:
+    - htop
+    - gdebi
+    - tree
+    - jq
+    - lastpass-cli
+    - direnv
+    - golang-go
+    - golang-docker-credential-helpers
+    - docker-compose
+    - ssh
+    - pssh
+      #  - bashtop

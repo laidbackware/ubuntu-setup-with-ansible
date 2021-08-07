@@ -2,8 +2,8 @@
 - hosts: localhost
   # become: true
   gather_facts: False
-  vars_files:
-    - vars.yml
+  #  vars_files:
+  #  - vars.yml
 
   pre_tasks:
     - name: Create the temporary directory
@@ -22,8 +22,10 @@
         user={{ lookup('env', 'USER') }}
 
   roles:
-    # - role: apt-packages
-    #   become: yes
+    - role: shell/aliases
+    
+    - role: apt-packages
+      become: yes
 
     - role: dev/git-setup
       when: dev.git is defined
