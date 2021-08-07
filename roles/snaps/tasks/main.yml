@@ -1,0 +1,6 @@
+---
+- name: Install Snaps
+  community.general.snap:
+    name: "{{ item.name }}"
+    classic: "{{ item.classic | default(false) }}"
+  loop: "{{ snaps }}"

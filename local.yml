@@ -1,9 +1,6 @@
 ---
 - hosts: localhost
-  # become: true
   gather_facts: False
-  #  vars_files:
-  #  - vars.yml
 
   pre_tasks:
     - name: Create the temporary directory
@@ -24,8 +21,21 @@
   roles:
     - role: shell/aliases
     
-    - role: apt-packages
+    - name: Common apt packages
+      role: apt-packages
       become: yes
+      apt: "{{ common.apt }}"
+      when: "common.apt is defined"
+
+    - name: Work apt packages
+      role: apt-packages
+      become: yes
+      apt: "{{ work.apt }}"
+      when: "work.apt is defined"
+    
+    - role: snaps
+      become: yes
+      when: snaps is defined
 
     - role: dev/git-setup
       when: dev.git is defined
