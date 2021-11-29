@@ -17,4 +17,5 @@ apt:
     - docker-compose
     - ssh
     - pssh
+    - libnss3-tools # for mkcert
       #  - bashtop

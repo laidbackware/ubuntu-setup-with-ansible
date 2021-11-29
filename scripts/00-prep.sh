@@ -10,5 +10,6 @@ set -euxo pipefail
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-$script_dir/01-add-user-no-pwd-sudo.sh
-$script_dir/02-get-ssh-keys-from-lastpass.sh $1
+$script_dir/01-install-dependencies.sh
+$script_dir/02-add-user-no-pwd-sudo.sh
+$script_dir/03-get-ssh-keys-from-lastpass.sh $1

@@ -21,11 +21,12 @@ snaps:
   - name: powershell-preview
     classic: true
   - name: inkscape
+  - name: btop
 
-work:
-  apt:
-    packages:
-      - azure-cli
+    #work:
+    #apt:
+    #packages:
+      #- azure-cli
 
 common:
   apt:
@@ -34,7 +35,6 @@ common:
       - ppa:agornostal/ulauncher
       - ppa:solaar-unifying/stable
     packages:
-      - htop
       - inetutils-traceroute
       - gdebi
       - tree
@@ -45,11 +45,10 @@ common:
       - gettext
       - libgettextpo-dev
       - gnome-shell-extensions
-      - gnome-tweak-tool
+        #- gnome-tweak-tool
       - gnome-menus
       - gir1.2-gmenu-3.0
       - papirus-icon-theme # Icons
-      - lastpass-cli
       - direnv
       - vlc
       - gthumb
@@ -75,7 +74,56 @@ common:
       - bashtop
       - net-tools # netstat
       - pavucontrol # pulase audio
+      - libnss3-tools # for mkcert
+      - flatpak
+      - gnome-software-plugin-flatpak
+      - expect # CLI login
+      - ncdu
+      - libarchive-tools # for bsdtar
+
+
     packages_deb: # Can be removed
       - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
       - https://zoom.us/client/latest/zoom_amd64.deb
       - https://releases.hyper.is/download/deb
+
+asdf_plugins:
+  - name: "terraform"
+    versions:
+      - "0.15.5"
+      - "0.14.11"
+      - "0.13.7"
+    global: "0.15.5"
+  - name: "credhub"
+    versions:
+      - "2.9.0"
+    global: "2.9.0"
+  - name: "fly"
+    versions:
+      - "6.3.1"
+      - "7.0.0"
+    global: "0.15.5"
+  - name: "govc"
+    versions:
+      - "0.26.1"
+    global: "0.26.1"
+  - name: "kind"
+    versions:
+      - "0.11.1"
+    global: "0.11.1"
+  - name: "kubectl"
+    versions:
+      - "1.20.5"
+    global: "1.20.5"
+  - name: "kubectx"
+    versions:
+      - "0.9.4"
+    global: "0.9.4"
+  - name: "om"
+    versions:
+      - "7.3.1"
+    global: "7.3.1"
+  - name: "ytt"
+    versions:
+      - "0.36.0"
+    global: "0.36.0"
