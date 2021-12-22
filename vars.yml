@@ -59,6 +59,7 @@ common:
       - qdirstat # treesize
       - xarchiver # zip/7zip
       - v4l-utils # Webcam util
+      - guvcview # Webcam util
       - golang-go
       - default-jre
       - solaar
@@ -80,6 +81,7 @@ common:
       - expect # CLI login
       - ncdu
       - libarchive-tools # for bsdtar
+      - autojump # CLI tool to memorize previous directories
 
 
     packages_deb: # Can be removed

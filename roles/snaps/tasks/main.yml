@@ -4,3 +4,7 @@
     name: "{{ item.name }}"
     classic: "{{ item.classic | default(false) }}"
   loop: "{{ snaps }}"
+
+# This hack copies system fonts to ~/.local/share/fonts for snaps
+- name: Font hack
+  command: "for i in ls /etc/fonts/conf.d/*.conf ; do ln -s $i ~/.local/share/fonts/ ; done"

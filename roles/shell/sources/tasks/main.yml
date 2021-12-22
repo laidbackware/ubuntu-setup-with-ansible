@@ -1,0 +1,5 @@
+---
+- name: Copy functions
+  copy:
+    src: .bash_sources.sh
+    dest: "{{ home_dir }}/.bash_sources"

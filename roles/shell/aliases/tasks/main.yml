@@ -1,5 +1,5 @@
 ---
 - name: Copy aliases
   copy:
-    src: .aliases.sh
-    dest: "{{ home_dir }}/.aliases.sh"
+    src: .bash_aliases.sh
+    dest: "{{ home_dir }}/.bash_aliases"
