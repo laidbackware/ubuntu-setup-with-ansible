@@ -82,6 +82,8 @@ common:
       - ncdu
       - libarchive-tools # for bsdtar
       - autojump # CLI tool to memorize previous directories
+      - exfat-utils
+      - ecryptfs-utils # For setting up ~/Private/
 
 
     packages_deb: # Can be removed
