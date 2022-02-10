@@ -29,6 +29,6 @@ function asdfu() {
   fi
 
   latest_version="$(asdf list $product_name | sort -r | head -n 1 | xargs)" || return 1
-
+  echo "Setting ${latest_version} as global default for ${product_name}"
   asdf global $product_name $latest_version
 }
