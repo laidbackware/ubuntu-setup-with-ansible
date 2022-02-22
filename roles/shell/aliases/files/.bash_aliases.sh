@@ -1,7 +1,9 @@
 alias k='kubectl'
 alias ka='kubectl apply -f'
-alias kgp='kubectl get pod'
+alias kc='kubectl create'
 alias kd='kubectl describe'
+alias kg='kubectl get'
+alias kgp='kubectl get pod'
 
 alias gb='git branch'
 alias gc='git checkout'

@@ -32,3 +32,7 @@ function asdfu() {
   echo "Setting ${latest_version} as global default for ${product_name}"
   asdf global $product_name $latest_version
 }
+
+function labon() {
+  ipmitool -H $IPMI_IP -U $IPMI_USERNAME -P $IMPI_PASSWORD power on
+}
