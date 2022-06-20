@@ -44,10 +44,10 @@
       become: yes
 
     - role: dev/vscode
-      when: gnome is defined
+      when: gnome is defined or chomebook is defined
       
     - role: apps/hyper
-      when: gnome is defined
+      when: gnome is defined or chromebook is defined
 
     - role: gnome/extensions
       when: gnome.extensions is defined

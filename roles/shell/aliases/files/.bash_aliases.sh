@@ -21,3 +21,5 @@ alias harold='ssh matt@192.168.0.5'
 alias pssh="parallel-ssh  -h hosts -i"
 
 alias obe='eval "$(om bosh-env)"'
+
+alias ll='ls -la'

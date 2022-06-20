@@ -21,3 +21,4 @@
 - name: Install Visual Studio Code Extensions
   command: code --install-extension "{{ item }}"
   loop: "{{ dev.vscode_extensions }}"
+  when: dev is defined and dev.vscode_extenstions is defined
