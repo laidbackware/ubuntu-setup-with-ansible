@@ -27,6 +27,8 @@ snaps:
     #apt:
     #packages:
       #- azure-cli
+flatpaks:
+  - name: TextSnatcher
 
 common:
   apt:
@@ -34,6 +36,7 @@ common:
       - ppa:papirus/papirus
       - ppa:agornostal/ulauncher
       - ppa:solaar-unifying/stable
+      # - ppa:damentz/liquorix
     packages:
       - inetutils-traceroute
       - gdebi
@@ -84,6 +87,9 @@ common:
       - autojump # CLI tool to memorize previous directories
       - exfat-utils
       - ecryptfs-utils # For setting up ~/Private/
+      - python-is-python3#
+      - linux-image-liquorix-amd64 
+      - linux-headers-liquorix-amd64
 
 
     packages_deb: # Can be removed

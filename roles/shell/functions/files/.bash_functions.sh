@@ -34,7 +34,51 @@ function asdfu() {
 }
 
 function labon() {
-  ipmitool -H $IPMI_IP -U $IPMI_USERNAME -P $IMPI_PASSWORD power on
+  # Ensure correct vars are set and error if not
+  export GOVC_URL=${GOVC_URL:-'192.168.1.251'}
+  [ -z "${GOVC_USERNAME:-}" ] && echo '$GOVC_USERNAME must be set' && return 1
+  [ -z "${GOVC_PASSWORD:-}" ] && echo '$GOVC_PASSWORD must be set' && return 1
+  export GOVC_INSECURE=true
+
+  if $(curl -k --output /dev/null --silent --head --fail -m 5 https://${GOVC_URL})
+  then
+      echo "Host is already online, exiting cleanly"
+      return 0
+  else
+      echo "Host ${GOVC_URL} is not online, attempting to wake up"
+  fi
+
+  ipmitool -H $IPMI_IP -U $IPMI_USERNAME -P $IMPI_PASSWORD power on || { echo 'Failed powering on' ; return 1; }
+
+  echo -e "\Checking if host ${GOVC_URL} is online!\n"
+  # Check to see when host comes online and timeout after 5 minutes
+  local attempt_counter=0
+  local max_attempts=60
+  until $(curl -k --output /dev/null --silent --head --fail https://${GOVC_URL}); do
+    if [ ${attempt_counter} -eq ${max_attempts} ];then
+      echo "Max attempts reached"
+      exit 1
+    fi
+    attempt_counter=$(expr ${attempt_counter} + 1)
+    local current_try=$(expr ${max_attempts} - ${attempt_counter})
+    echo "Host ${GOVC_URL} not online yet, ${current_try} more retries left"
+    sleep 5
+  done
+
+  echo -e "\nHost ${GOVC_URL} online!\n"
+
+  host="$(govc ls /ha-datacenter/host)"
+
+  govc host.maintenance.exit ${host} || { echo 'Failed exiting maintenance' ; return 1; }
+
+  VMS="$(govc ls /ha-datacenter/vm)"
+
+  # Suspect vCenter first to ensure vCLS doesn't get re-created
+  govc vm.power -on -wait "/ha-datacenter/vm/vcsa7"
+  # Suspect untangle router
+  govc vm.power -on -wait "/ha-datacenter/vm/untangle"
+
+  echo -e "\n Power on compelete"
 }
 
 function suspend_vm() {

@@ -1,4 +1,16 @@
 ---
+
+- name: Remove Docker packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - docker
+    - docker-engine
+    - docker.io
+    - containerd
+    - runc
+
 - name: Install docker packages
   ansible.builtin.apt:
     name:
@@ -8,11 +20,6 @@
       - software-properties-common
     state: present
     update_cache: yes
-  # with_items:
-  #   - apt-transport-https
-  #   - ca-certificates
-  #   - curl
-  #   - software-properties-common
 
 - name: Add Dockers official GPG key
   ansible.builtin.apt_key:
@@ -26,7 +33,7 @@
 
 - name: Set up the stable repository
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
     state: present
     update_cache: yes
 

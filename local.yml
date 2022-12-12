@@ -20,6 +20,7 @@
 
   roles:
     - role: shell/aliases
+    - role: shell/functions
     
     - name: Common apt packages
       role: apt-packages
