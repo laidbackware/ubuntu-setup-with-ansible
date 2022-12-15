@@ -35,7 +35,6 @@
       when: "work.apt is defined"
     
     - role: snaps
-      become: yes
       when: snaps is defined
 
     - role: dev/git-setup
@@ -50,10 +49,15 @@
     - role: apps/hyper
       when: gnome is defined or chromebook is defined
 
-    - role: gnome/extensions
-      when: gnome.extensions is defined
+    # BROKEN
+    # Consider https://github.com/PeterMosmans/ansible-role-customize-gnome
+    # - role: gnome/extensions
+    #   when: gnome.extensions is defined
 
     - role: gnome/theme
+      when: gnome.theme is defined
+
+    - role: gnome/tweaks
       when: gnome.theme is defined
 
   post_tasks:

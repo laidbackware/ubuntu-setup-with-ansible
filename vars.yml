@@ -8,16 +8,14 @@ dev:
 
 # If this section is removed no GUI based apps will be installed
 gnome: # Can be removed
-  extensions: # Can be removed
-    - name: arcmenu@arcmenu.com
-    - name: dash-to-panel@jderose9.github.com
-    - name: horizontal-workspaces@gnome-shell-extensions.gcampax.github.com
+  # extensions: # Can be removed
+  #  - name: arcmenu@arcmenu.com
+  #  - name: dash-to-panel@jderose9.github.com
+  #  - name: horizontal-workspaces@gnome-shell-extensions.gcampax.github.com
   theme: # Can be removed
     git_path: vinceliuice/Canta-theme
     install_script: install.sh
 snaps:
-  - name: slack
-    classic: true
   - name: powershell-preview
     classic: true
   - name: inkscape
@@ -29,6 +27,7 @@ snaps:
       #- azure-cli
 flatpaks:
   - name: TextSnatcher
+  - name: com.slack.Slack
 
 common:
   apt:
@@ -38,6 +37,7 @@ common:
       - ppa:solaar-unifying/stable
       # - ppa:damentz/liquorix
     packages:
+      - vim
       - inetutils-traceroute
       - gdebi
       - tree
@@ -85,11 +85,11 @@ common:
       - ncdu
       - libarchive-tools # for bsdtar
       - autojump # CLI tool to memorize previous directories
-      - exfat-utils
+      # - exfat-utils
       - ecryptfs-utils # For setting up ~/Private/
-      - python-is-python3#
-      - linux-image-liquorix-amd64 
-      - linux-headers-liquorix-amd64
+      - python-is-python3
+      # - linux-image-liquorix-amd64 
+      # - linux-headers-liquorix-amd64
 
 
     packages_deb: # Can be removed

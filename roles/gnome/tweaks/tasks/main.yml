@@ -1,7 +1,13 @@
 ---
+
+- name: Copy tweaks to temp_dir
+  ansible.builtin.copy:
+    src: saved_settings.dconf
+    dest: "{{ temp_dir }}/saved_settings.dconf"
+
 - name: Load Gnome Tweaks 
-  become_user: "{{user}}"
-  command: dconf load / < saved_settings.dconf
+  become_user: "{{ user }}"
+  shell: dconf load / < {{ temp_dir }}/saved_settings.dconf
 
 - name: Restart Gnome Shell
   command: "dbus-send --type=method_call --print-reply --dest=org.gnome.Shell /org/gnome/Shell org.gnome.Shell.Eval string:'global.reexec_self()'"
