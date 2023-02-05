@@ -1,0 +1,21 @@
+---
+- name: Install asdf apt packages
+  ansible.builtin.apt: 
+    name: 
+      - curl
+      - git
+    update_cache: true
+  become: true
+
+- name: "install asdf"
+  ansible.builtin.git:
+    repo: "https://github.com/asdf-vm/asdf.git"
+    dest: "{{ home_dir }}/.asdf"
+
+- name: Add asdf to .bashrc
+  ansible.builtin.blockinfile:
+    path: "{{ home_dir }}/.bashrc"
+    block: |
+      . $HOME/.asdf/asdf.sh
+    insertbefore: EOF
+    marker: '# {mark} ANSIBLE MANAGED BLOCK - asdf'

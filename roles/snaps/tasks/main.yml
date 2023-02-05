@@ -7,5 +7,5 @@
   become: true
 
 # This hack copies system fonts to ~/.local/share/fonts for snaps
-- name: Font hack
-  shell: "for i in ls /etc/fonts/conf.d/*.conf ; do ln -s $i ~/.local/share/fonts/ ; done"
+#- name: Font hack
+#  shell: "for i in ls /etc/fonts/conf.d/*.conf ; do ln -s $i ~/.local/share/fonts/ ; done"

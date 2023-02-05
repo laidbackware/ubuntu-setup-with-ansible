@@ -1,64 +1,101 @@
 ---
 - hosts: localhost
-  gather_facts: False
+  gather_facts: True
+  collections:
+  - community.general.flatpak
 
   pre_tasks:
+    - include_vars: vars.yml
+      tags: ["pre"]
+
     - name: Create the temporary directory
       tempfile:
         state: directory
         suffix: setup
       register: temp_dir_results
-    
+      tags: ["pre"]
+
     - set_fact:
         temp_dir={{ temp_dir_results.path }}
+      tags: ["pre"]
 
-    - set_fact:
-        home_dir={{ lookup('env', 'HOME') }}
+  vars:
+    desktop_mode: "{{ desktop | default(False) }}"
+    laptop_mode: "{{ laptop | default(False) }}"
+    chromebook_mode: "{{ chromebook | default(False) }}"
+    home_dir: "{{ ansible_env.HOME }}"
+    user: "{{ ansible_env.USER }}"
+    
+    apt_packages: >-
+      {{ common_vars.apt_packages + (desktop_vars.apt_packages if (desktop_mode or laptop_mode) else [])
+      + (laptop_vars.apt_packages if laptop_mode else [])
+      + (chromebook_vars.apt_packages if chromebook_mode else []) }}
+    deb_packages: >-
+      {{ common_vars.deb_packages + (desktop_vars.deb_packages if (desktop_mode or laptop_mode) else [])
+      + (laptop_vars.deb_packages if laptop_mode else [])
+      + (chromebook_vars.deb_packages if chromebook_mode else []) }}
+    snaps: >-
+      {{ common_vars.snaps + (desktop_vars.snaps if (desktop_mode or laptop_mode) else [])
+      + (laptop_vars.snaps if laptop_mode else [])
+      + (chromebook_vars.snaps if chromebook_mode else []) }}
+    flatpaks: >-
+      {{ common_vars.flatpaks + (desktop_vars.flatpaks if (desktop_mode or laptop_mode) else [])
+      + (laptop_vars.flatpaks if laptop_mode else [])
+      + (chromebook_vars.flatpaks if chromebook_mode else []) }}
 
-    - set_fact:
-        user={{ lookup('env', 'USER') }}
 
   roles:
     - role: shell/aliases
-    - role: shell/functions
-    
-    - name: Common apt packages
-      role: apt-packages
-      become: yes
-      apt: "{{ common.apt }}"
-      when: "common.apt is defined"
+      tags: ["shell-aliases"]
 
-    - name: Work apt packages
-      role: apt-packages
+    - role: shell/functions
+      tags: ["shell-functions"]
+    
+    - role: shell/bashrc
+      tags: ["shell-bashrc"]
+  
+    - role: asdf/install
+      tags: ["asdf-install"]
+
+    - role: apt-packages
       become: yes
-      apt: "{{ work.apt }}"
-      when: "work.apt is defined"
+      tags: ["apt-packages"]
     
     - role: snaps
-      when: snaps is defined
+      tags: ["snaps"]
 
     - role: dev/git-setup
-      when: dev.git is defined
+      tags: ["git-setup"]
 
     - role: apps/docker
       become: yes
+      tags: ["docker"]
 
-    - role: dev/vscode
-      when: gnome is defined or chomebook is defined
+    - role: apps/vscode
+      when: desktop_mode or laptop_mode or chromebook_mode
+      tags: ["vscode"]
       
     - role: apps/hyper
-      when: gnome is defined or chromebook is defined
+      when: desktop_mode or laptop_mode or chromebook_mode
+      tags: ["hyper"]
 
-    # BROKEN
-    # Consider https://github.com/PeterMosmans/ansible-role-customize-gnome
-    # - role: gnome/extensions
-    #   when: gnome.extensions is defined
+    # # BROKEN
+    # # Consider https://github.com/PeterMosmans/ansible-role-customize-gnome
+    # # - role: gnome/extensions
+    # #   when: gnome.extensions is defined
 
-    - role: gnome/theme
-      when: gnome.theme is defined
+    # - role: gnome/theme
+    #   when: gnome.theme is defined
 
-    - role: gnome/tweaks
-      when: gnome.theme is defined
+    # - role: gnome/tweaks
+    #   when: gnome.theme is defined
+
+    - role: gnome/laptop
+      when: laptop_mode
+
+    - role: system/disable-intel-turbo
+      when: laptop_mode
+      tags: ["disable-turbo"]
 
   post_tasks:
     - name: Remove the temporary directory

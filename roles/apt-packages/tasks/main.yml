@@ -3,20 +3,18 @@
   ansible.builtin.apt_repository:
     repo: "{{item}}"
     update_cache: yes
-  loop: "{{ apt.repositories }}"
-  when: "apt.repositories is defined"
+  with_items: "{{ apt_repositories }}"
 
 - name: Install apt packages
   ansible.builtin.apt: 
-    name: "{{ apt.packages }}"
+    name: "{{ apt_packages }}"
     update_cache: yes
-  when: "apt.packages is defined"
 
 - name: Install deb packages
   ansible.builtin.apt: 
     deb: "{{item}}"
-  loop: "{{ apt.packages_deb }}"
-  when: "apt.packages_deb is defined"
+  with_items:
+    - "{{ deb_packages }}"
 
 - name: Remove useless packages from the cache
   ansible.builtin.apt:

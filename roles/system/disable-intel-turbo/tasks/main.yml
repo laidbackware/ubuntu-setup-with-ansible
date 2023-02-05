@@ -1,0 +1,21 @@
+---
+
+- name: ensure file exists
+  copy:
+    content: "#!/bin/bash\n\n"
+    dest: /etc/rc.local
+    force: false
+    group: root
+    owner: root
+    mode: 0700
+  become: true
+
+- name: Add disable Intel Turbo at boot
+  ansible.builtin.blockinfile:
+    path: /etc/rc.local
+    block: |
+      echo "0" | sudo tee /sys/devices/system/cpu/cpufreq/boost
+    insertbefore: EOF
+    marker: '# {mark} ANSIBLE MANAGED BLOCK - intel turbo'
+    mode: 0700
+  become: true

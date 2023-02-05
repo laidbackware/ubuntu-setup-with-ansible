@@ -1,0 +1,22 @@
+---
+
+- name: Add repositories
+  ansible.builtin.apt_repository:
+    repo: ppa:touchegg/stable
+    update_cache: yes
+
+- name: Install apt packages
+  ansible.builtin.apt: 
+    name: touchegg
+    update_cache: yes
+
+- name: Copy touchegg config to temp_dir
+  ansible.builtin.copy:
+    src: touchegg.conf
+    dest: "{{ ansible_env.HOME }}/.config/toucheggtouchegg.conf"
+
+- name: Install the Touchegg package from flathub for current user
+  community.general.flatpak:
+    name: com.github.joseexposito.touche
+    state: present
+    method: user

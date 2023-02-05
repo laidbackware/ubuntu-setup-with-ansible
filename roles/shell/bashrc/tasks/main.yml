@@ -1,0 +1,16 @@
+---
+
+- name: Touch a .bash_secrets.sh
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.bash_secrets"
+    state: touch
+
+- name: Add to .bashrc
+  ansible.builtin.blockinfile:
+    path: "{{ home_dir }}/.bashrc"
+    block: |
+      . $HOME/.bash_functions
+      . $HOME/.bash_aliases
+      . $HOME/.bash_secrets
+    insertbefore: EOF
+    marker: '# {mark} ANSIBLE MANAGED BLOCK - .bash_'

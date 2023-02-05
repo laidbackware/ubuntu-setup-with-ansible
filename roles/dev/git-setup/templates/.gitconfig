@@ -1,3 +1,3 @@
 [user]
-	email = "{{ dev.git.email }}"
-	name = "{{ dev.git.name }}"
+	email = "{{ git.email }}"
+	name = "{{ git.name }}"

@@ -47,7 +47,3 @@
     name: "{{user}}"
     group: "docker"
     append: yes
-
-- name: Refresh group membership
-  become: no
-  command: newgrp docker 
