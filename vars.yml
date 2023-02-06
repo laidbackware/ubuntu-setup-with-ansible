@@ -15,6 +15,9 @@ gnome: # Can be removed
 
 
 common_vars:
+  ppa_repositories: []
+  # repositories:
+  #   - https://download.onlyoffice.com/repo/debian squeeze main
   apt_packages:
     - vim
     - inetutils-traceroute
@@ -47,6 +50,10 @@ common_vars:
   flatpaks: []
 
 desktop_vars:
+  ppa_repositories:
+    - ppa:papirus/papirus
+    - ppa:agornostal/ulauncher
+    - ppa:solaar-unifying/stable
   apt_packages:
     - snapd
     - ulauncher
@@ -72,6 +79,7 @@ desktop_vars:
     - remmina
     - pavucontrol # pulase audio
     - gnome-software-plugin-flatpak
+    - onlyoffice-desktopeditors
 
   deb_packages:
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -87,6 +95,7 @@ desktop_vars:
     - name: com.slack.Slack
 
 laptop_vars:
+  ppa_repositories: []
   apt_packages:
     - powercap-utils
   deb_packages: []
@@ -94,6 +103,7 @@ laptop_vars:
   flatpaks: []
 
 chromebook_vars:
+  ppa_repositories: []
   apt_packages: []
   deb_packages: []
   snaps: []

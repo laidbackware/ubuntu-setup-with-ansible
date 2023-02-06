@@ -1,6 +1,6 @@
 ---
 
-- name: Touch a .bash_secrets.sh
+- name: Touch .bash_secrets.sh
   ansible.builtin.file:
     path: "{{ home_dir }}/.bash_secrets"
     state: touch

@@ -1,14 +1,15 @@
 ---
 
-- name: Add repositories
+- name: Add Touchegg repository
   ansible.builtin.apt_repository:
     repo: ppa:touchegg/stable
-    update_cache: yes
+  become: true
 
-- name: Install apt packages
+- name: Install Touchegg apt package
   ansible.builtin.apt: 
     name: touchegg
     update_cache: yes
+  become: true
 
 - name: Copy touchegg config to temp_dir
   ansible.builtin.copy:

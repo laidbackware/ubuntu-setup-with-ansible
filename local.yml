@@ -34,6 +34,10 @@
       {{ common_vars.deb_packages + (desktop_vars.deb_packages if (desktop_mode or laptop_mode) else [])
       + (laptop_vars.deb_packages if laptop_mode else [])
       + (chromebook_vars.deb_packages if chromebook_mode else []) }}
+    ppa_repositories: >-
+      {{ common_vars.ppa_repositories + (desktop_vars.ppa_repositories if (desktop_mode or laptop_mode) else [])
+      + (laptop_vars.ppa_repositories if laptop_mode else [])
+      + (chromebook_vars.ppa_repositories if chromebook_mode else []) }}
     snaps: >-
       {{ common_vars.snaps + (desktop_vars.snaps if (desktop_mode or laptop_mode) else [])
       + (laptop_vars.snaps if laptop_mode else [])
