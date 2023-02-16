@@ -43,6 +43,7 @@ common_vars:
     - autojump # CLI tool to memorize previous directories
     - ecryptfs-utils # For setting up ~/Private/
     - python-is-python3
+    - ipmitool
     # - linux-image-liquorix-amd64 
     # - linux-headers-liquorix-amd64
 
