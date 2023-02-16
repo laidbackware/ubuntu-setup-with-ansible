@@ -35,10 +35,16 @@ function asdfu() {
 
 function labon() {
   # Ensure correct vars are set and error if not
-  export GOVC_URL=${GOVC_URL:-'192.168.1.251'}
-  [ -z "${GOVC_USERNAME:-}" ] && echo '$GOVC_USERNAME must be set' && return 1
-  [ -z "${GOVC_PASSWORD:-}" ] && echo '$GOVC_PASSWORD must be set' && return 1
+  [ -z "${ESXI_IP:-}" ] && echo '$ESXI_IP must be set' && return 1
+  [ -z "${ESXI_USERNAME:-}" ] && echo '$ESXI_USERNAME must be set' && return 1
+  [ -z "${ESXI_PASSWORD:-}" ] && echo '$ESXI_PASSWORD must be set' && return 1
+  export GOVC_URL=$ESXI_IP
+  export GOVC_USERNAME=$ESXI_USERNAME
+  export GOVC_PASSWORD=$ESXI_PASSWORD
   export GOVC_INSECURE=true
+  [ -z "${IPMI_IP:-}" ] && echo '$IPMI_IP must be set' && return 1
+  [ -z "${IPMI_USERNAME:-}" ] && echo '$IPMI_USERNAME must be set' && return 1
+  [ -z "${IPMI_PASSWORD:-}" ] && echo '$IPMI_PASSWORD must be set' && return 1
 
   if $(curl -k --output /dev/null --silent --head --fail -m 5 https://${GOVC_URL})
   then
@@ -48,16 +54,16 @@ function labon() {
       echo "Host ${GOVC_URL} is not online, attempting to wake up"
   fi
 
-  ipmitool -H $IPMI_IP -U $IPMI_USERNAME -P $IMPI_PASSWORD power on || { echo 'Failed powering on' ; return 1; }
+  ipmitool -H $IPMI_IP -U $IPMI_USERNAME -P $IPMI_PASSWORD power on || { echo 'Failed powering on' ; return 1; }
 
-  echo -e "\Checking if host ${GOVC_URL} is online!\n"
+  echo -e "\nChecking if host ${GOVC_URL} is online!\n"
   # Check to see when host comes online and timeout after 5 minutes
   local attempt_counter=0
   local max_attempts=60
   until $(curl -k --output /dev/null --silent --head --fail https://${GOVC_URL}); do
     if [ ${attempt_counter} -eq ${max_attempts} ];then
       echo "Max attempts reached"
-      exit 1
+      return 1
     fi
     attempt_counter=$(expr ${attempt_counter} + 1)
     local current_try=$(expr ${max_attempts} - ${attempt_counter})
@@ -96,9 +102,12 @@ function suspend_vm() {
 
 function laboff() {
   # Ensure correct vars are set and error if not
-  export GOVC_URL=${GOVC_URL:-'192.168.1.251'}
-  [ -z "${GOVC_USERNAME:-}" ] && echo '$GOVC_USERNAME must be set' && return 1
-  [ -z "${GOVC_PASSWORD:-}" ] && echo '$GOVC_PASSWORD must be set' && return 1
+  [ -z "${ESXI_IP:-}" ] && echo '$ESXI_IP must be set' && return 1
+  [ -z "${ESXI_USERNAME:-}" ] && echo '$ESXI_USERNAME must be set' && return 1
+  [ -z "${ESXI_PASSWORD:-}" ] && echo '$ESXI_PASSWORD must be set' && return 1
+  export GOVC_URL=$ESXI_IP
+  export GOVC_USERNAME=$ESXI_USERNAME
+  export GOVC_PASSWORD=$ESXI_PASSWORD
   export GOVC_INSECURE=true
   
   if $(curl -k --output /dev/null --silent --head --fail -m 1 https://${GOVC_URL}); then
@@ -108,9 +117,9 @@ function laboff() {
     return 0
   fi
 
-  # Suspect vCenter first to ensure vCLS doesn't get re-created
+  # Suspend vCenter first to ensure vCLS doesn't get re-created
   suspend_vm "/ha-datacenter/vm/vcsa7"
-  # Suspect untangle router
+  # Suspend untangle router
   suspend_vm "/ha-datacenter/vm/untangle"
 
   local vms=$(govc ls /ha-datacenter/vm)
@@ -154,4 +163,26 @@ function laboff() {
     fi
     govc host.shutdown "${host}"
   done
+}
+
+function tkgcli () {
+  version=${1:-*}
+  os="$(uname -s | awk '{print tolower($0)}')" 
+  if ! command -v vcc &> /dev/null; then umask 002
+    curl -OLf "https://github.com/vmware-labs/vmware-customer-connect-cli/releases/download/v1.1.3/vcc-${os}-v1.1.3"
+    mv vmd-${os}-v0.3.0 "$HOME/.local/bin/vcc"
+    chmod +x "$HOME/.local/bin/vcc"
+  fi
+  echo "Attempting to download version $version"
+  vcc download -p vmware_tanzu_kubernetes_grid -s tkg -v "$version" -f "tanzu-cli-bundle-${os}-amd64.*" --accepteula
+  tanzu_dir="${TANZU_DIR:-$HOME/tanzu}" 
+  echo "Extracting to $tanzu_dir"
+  mkdir -p "$tanzu_dir"
+  find $tanzu_dir -mindepth 1 -maxdepth 1 | xargs -rn1 rm -rf
+  tar -xvf "$HOME/vcc-downloads/tanzu-cli-bundle-${os}-amd64.tar.gz" --directory "$tanzu_dir"
+  cli="$(find $tanzu_dir -name tanzu-core-${os}_amd64)" || (return 1)
+  echo "Moving $cli to $HOME/.local/bin/tanzu"
+  mv "$cli" "$HOME/.local/bin/tanzu"
+  tanzu plugin clean
+  tanzu init
 }
