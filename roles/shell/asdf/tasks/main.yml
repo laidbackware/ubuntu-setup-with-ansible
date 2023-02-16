@@ -1,0 +1,8 @@
+---
+
+- name: Clone ASDF to .asdf
+  ansible.builtin.git:
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: "{{ home_dir }}/.asdf"
+    single_branch: yes
+    version: v0.11.0
