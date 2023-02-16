@@ -64,6 +64,10 @@
     - role: apt-packages
       become: yes
       tags: ["apt-packages"]
+
+    - role: apps/chrome-laptop-mod
+      tags: ["chrome-laptop-mod"]
+      when: laptop_mode
     
     - role: snaps
       tags: ["snaps"]
@@ -72,7 +76,7 @@
       tags: ["git-setup"]
 
     - role: apps/docker
-      become: yes
+      become: TRUE
       tags: ["docker"]
 
     - role: apps/vscode
@@ -83,18 +87,19 @@
       when: desktop_mode or laptop_mode or chromebook_mode
       tags: ["hyper"]
 
-    # # BROKEN
-    # # Consider https://github.com/PeterMosmans/ansible-role-customize-gnome
-    # # - role: gnome/extensions
-    # #   when: gnome.extensions is defined
+    - role: gnome/extensions
+      when: desktop_mode or laptop_mode
+      tags: ["gnome-extensions"]
 
-    # - role: gnome/theme
-    #   when: gnome.theme is defined
+    - role: gnome/theme
+      when: desktop_mode or laptop_mode
+      tags: ["gnome-theme"]
 
-    # - role: gnome/tweaks
-    #   when: gnome.theme is defined
+    - role: gnome/settings
+      when: desktop_mode or laptop_mode
+      tags: ["gnome-settings"]
 
-    - role: gnome/laptop
+    - role: gnome/touchegg
       when: laptop_mode
 
     - role: system/disable-intel-turbo

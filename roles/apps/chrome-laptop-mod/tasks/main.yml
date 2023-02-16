@@ -1,0 +1,9 @@
+---
+
+  - name: Add Chrome flag 2 finger back on laptop
+    ansible.builtin.lineinfile: 
+      path: /usr/share/applications/google-chrome.desktop
+      regexp: 'Exec=/usr/bin/google-chrome-stable %U'
+      line: 'Exec=/usr/bin/google-chrome-stable --enable-features=TouchpadOverscrollHistoryNavigation %U'
+      backrefs: true
+    become: true

@@ -1,5 +1,35 @@
 ---
+- name: Get Gnome Shell version
+  ansible.builtin.shell: |-
+    set -o pipefail
+    gnome-shell --version | sed 's/^[^0-9.]*//'
+  args:
+    executable: /usr/bin/bash
+  register: result_gnome_version
+  changed_when: false
+
+- ansible.builtin.set_fact:
+    gnome_shell_version: "{{ result_gnome_version.stdout }}"
+    extensions: []
+    extenstions_changed: False
+
 - name: Loop Extensions
   include_tasks: add-shell-extension.yml
   loop: "{{ gnome.extensions }}"
 
+- debug: var=extensions
+- debug: var=extenstions_changed
+
+- name: Restart Gnome Shell to load extensions if changed
+  ansible.builtin.command:
+    cmd: killall -3 gnome-shell
+  when: not extenstions_changed
+
+- name: Pause for 10 seconds to allow Gnome to restart
+  ansible.builtin.pause:
+    minutes: 5
+
+# Possibly not needed as extensions install enabled
+- name: Enable extensions
+  ansible.builtin.command: gnome-extensions enable {{ item }}
+  with_items: "{{ extensions }}"

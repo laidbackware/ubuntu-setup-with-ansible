@@ -1,24 +1,31 @@
 ---  
-- name: "Download extension {{ item.name }}"
-  ansible.builtin.get_url: 
-    url: "https://extensions.gnome.org/download-extension/{{ item.name }}.shell-extension.zip?shell_version=9.99.0"
-    dest: "{{ temp_dir }}/{{ item.name }}.shell-extension.zip"
+
+- name: Get Gnome Shell extension info for extenstion id={{ item.id }}
+  ansible.builtin.uri:
+    url: https://extensions.gnome.org/extension-info/?pk={{ item.id }}&shell_version={{ gnome_shell_version }}
+    return_content: true
+  register: response_extension_info
+
+- set_fact:
+    extension_name: "{{ response_extension_info.json.uuid }}"
+
+- name: Download extensons id={{ item.id }}
+  ansible.builtin.get_url:
+    url: "https://extensions.gnome.org{{ response_extension_info.json.download_url }}"
+    dest: "{{ temp_dir }}/{{ extension_name }}.zip"
 
 - name: Create directory if it does not exist
   ansible.builtin.file:
-    path: "{{ home_dir }}/.local/share/gnome-shell/extensions/{{ item.name }}"
+    path: "{{ home_dir }}/.local/share/gnome-shell/extensions/{{ extension_name }}"
     state: directory
     mode: '0755'
 
 - name: "Extract {{ item.name }} to extensions dir"
   ansible.builtin.unarchive:
-    src: "{{ temp_dir }}/{{ item.name }}.shell-extension.zip"
-    dest: "{{ home_dir }}/.local/share/gnome-shell/extensions/{{ item.name }}/"
+    src: "{{ temp_dir }}/{{ extension_name }}.zip"
+    dest: "{{ home_dir }}/.local/share/gnome-shell/extensions/{{ extension_name }}/"
+  register: result_extracted
 
-- name: "Enable {{ item.name }}"
-  command: "gnome-extensions enable {{ item.name }}"
-
-- name: Remove download
-  ansible.builtin.file:
-    path: "{{ temp_dir }}/{{ item.name }}.shell-extension.zip"
-    state: absent
+- set_fact:
+    extensions: "{{ extensions + [extension_name] }}"
+    extenstions_changed: "{{ extenstions_changed or result_extracted.changed }}"

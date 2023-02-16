@@ -1,0 +1,15 @@
+---
+
+- name: Copy settings to temp_dir
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ temp_dir }}/"
+  with_fileglob:
+    - "*.conf"
+
+- name: Load Gnome settings 
+  become_user: "{{ user }}"
+  shell: |-
+    dconf reset -f {{ item.value }}
+    dconf load {{ item.value }} < {{ temp_dir }}/{{ item.key }}.conf
+  with_dict: "{{ gnome.settings }}"

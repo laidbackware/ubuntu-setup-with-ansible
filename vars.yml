@@ -3,15 +3,20 @@ git:
   email: laidbackware.git@gmail.com
   name: Matt Proud
 
-# If this section is removed no GUI based apps will be installed
-gnome: # Can be removed
-  # extensions: # Can be removed
-  #  - name: arcmenu@arcmenu.com
-  #  - name: dash-to-panel@jderose9.github.com
-  #  - name: horizontal-workspaces@gnome-shell-extensions.gcampax.github.com
+# Settings only applied in desktop or laptop mode
+gnome:
   theme: # Can be removed
     git_path: vinceliuice/Canta-theme
     install_script: install.sh
+  settings:
+    dash-to-panel: "/org/gnome/shell/extensions/dash-to-panel/"
+    key-bind-0: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+    mouse: "/org/gnome/desktop/peripherals/mouse/"
+    power: "/org/gnome/settings-daemon/plugins/power/"
+    touchpad: "/org/gnome/desktop/peripherals/touchpad/"
+  extensions:
+    - id: 1160  # Dash-to-panel
+    # - id: 3628  # arc menu
 
 
 common_vars:
@@ -80,6 +85,7 @@ desktop_vars:
     - pavucontrol # pulase audio
     - gnome-software-plugin-flatpak
     - onlyoffice-desktopeditors
+    - fonts-roboto
 
   deb_packages:
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
