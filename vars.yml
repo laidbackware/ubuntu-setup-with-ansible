@@ -97,6 +97,7 @@ desktop_vars:
     - name: powershell-preview
       classic: true
     - name: btop
+    - name: hugo
   flatpaks:
     - name: TextSnatcher
     - name: com.slack.Slack

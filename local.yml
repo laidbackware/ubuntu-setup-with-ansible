@@ -50,13 +50,13 @@
 
   roles:
     - role: shell/aliases
-      tags: ["shell-aliases"]
+      tags: ["shell-aliases", "shell"]
 
     - role: shell/functions
-      tags: ["shell-functions"]
+      tags: ["shell-functions", "shell"]
     
     - role: shell/bashrc
-      tags: ["shell-bashrc"]
+      tags: ["shell-bashrc", "shell"]
   
     - role: asdf/install
       tags: ["asdf-install"]
