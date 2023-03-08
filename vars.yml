@@ -46,6 +46,9 @@ common_vars:
     - ipmitool
     # - linux-image-liquorix-amd64 
     # - linux-headers-liquorix-amd64
+    - qemu
+    - binfmt-support
+    - qemu-user-static
 
   deb_packages: # Can be removed
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
