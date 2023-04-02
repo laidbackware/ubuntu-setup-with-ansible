@@ -25,9 +25,9 @@
     cmd: killall -3 gnome-shell
   when: not extenstions_changed
 
-- name: Pause for 10 seconds to allow Gnome to restart
+- name: Pause for 20 seconds to allow Gnome to restart
   ansible.builtin.pause:
-    minutes: 5
+    seconds: 20
 
 # Possibly not needed as extensions install enabled
 - name: Enable extensions

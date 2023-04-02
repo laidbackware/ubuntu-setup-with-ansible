@@ -20,9 +20,8 @@ gnome:
 
 
 common_vars:
-  ppa_repositories: []
-  # repositories:
-  #   - https://download.onlyoffice.com/repo/debian squeeze main
+  apt_repositories: []
+  gpg_keys: []
   apt_packages:
     - vim
     - inetutils-traceroute
@@ -46,7 +45,7 @@ common_vars:
     - ipmitool
     # - linux-image-liquorix-amd64 
     # - linux-headers-liquorix-amd64
-    - qemu
+    - qemu-kvm
     - binfmt-support
     - qemu-user-static
 
@@ -59,10 +58,15 @@ common_vars:
   flatpaks: []
 
 desktop_vars:
-  ppa_repositories:
+  apt_repositories:
     - ppa:papirus/papirus
     - ppa:agornostal/ulauncher
     - ppa:solaar-unifying/stable
+    - deb [signed-by=/etc/apt/trusted.gpg.d/onlyoffice.gpg] https://download.onlyoffice.com/repo/debian squeeze main
+  gpg_keys:
+    - server: hkp://keyserver.ubuntu.com:80
+      key: CB2DE8E5
+      name: onlyoffice
   apt_packages:
     - snapd
     - ulauncher
@@ -102,11 +106,12 @@ desktop_vars:
     - name: btop
     - name: hugo
   flatpaks:
-    - name: TextSnatcher
+    - name: com.github.rajsolai.textsnatcher
     - name: com.slack.Slack
 
 laptop_vars:
-  ppa_repositories: []
+  apt_repositories: []
+  gpg_keys: []
   apt_packages:
     - powercap-utils
   deb_packages: []
@@ -114,7 +119,8 @@ laptop_vars:
   flatpaks: []
 
 chromebook_vars:
-  ppa_repositories: []
+  apt_repositories: []
+  gpg_keys: []
   apt_packages: []
   deb_packages: []
   snaps: []

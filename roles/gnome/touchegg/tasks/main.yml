@@ -16,7 +16,7 @@
     src: touchegg.conf
     dest: "{{ ansible_env.HOME }}/.config/toucheggtouchegg.conf"
 
-- name: Install the Touchegg package from flathub for current user
+- name: Install the Touche package from flathub for current user
   community.general.flatpak:
     name: com.github.joseexposito.touche
     state: present

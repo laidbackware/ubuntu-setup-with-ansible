@@ -6,13 +6,11 @@
     state: present
 
 - name: Ansible check directory exists example.
-  become: yes
   stat:
     path: "{{ home_dir }}/.hyper_plugins/local/hyper-cobalt-theme"
   register: extension_dir
 
 - name: Download custom material theme
-  become: yes
   ansible.builtin.git:
     repo: 'https://github.com/laidbackware/hyper-cobalt-theme.git'
     dest: "{{ home_dir }}/.hyper_plugins/local/hyper-cobalt-theme"
@@ -22,3 +20,8 @@
   copy:
     src: .hyper.js
     dest: "{{ home_dir }}/.hyper.js"
+
+- name: Create directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.hyper_plugins/package.json"
+    state: touch

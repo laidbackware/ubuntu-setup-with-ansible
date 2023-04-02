@@ -1,9 +1,17 @@
 ---
+- name: GPG keys from key server
+  ansible.builtin.apt_key:
+    keyserver: "{{ item.server }}"
+    keyring: "/etc/apt/trusted.gpg.d/{{ item.name }}.gpg"
+    id: "{{ item.key }}"
+  with_items: "{{ gpg_keys }}"
+  when: '"server" in item'
+
 - name: Add repositories
   ansible.builtin.apt_repository:
     repo: "{{item}}"
     update_cache: yes
-  with_items: "{{ ppa_repositories }}"
+  with_items: "{{ apt_repositories }}"
 
 - name: Install apt packages
   ansible.builtin.apt: 
