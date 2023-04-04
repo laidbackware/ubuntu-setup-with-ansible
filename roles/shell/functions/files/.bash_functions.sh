@@ -28,7 +28,7 @@ function asdfu() {
     return 1
   fi
 
-  latest_version="$(asdf list $product_name | sort -r | head -n 1 | xargs)" || return 1
+  latest_version="$(asdf list $product_name | sed 's/\*//g' | sort -r | head -n 1 | xargs)" || return 1
   echo "Setting ${latest_version} as global default for ${product_name}"
   asdf global $product_name $latest_version
 }
@@ -185,4 +185,10 @@ function tkgcli () {
   mv "$cli" "$HOME/.local/bin/tanzu"
   tanzu plugin clean
   tanzu init
+}
+
+function kga {
+  for i in $(kubectl api-resources --verbs=list --namespaced -o name | grep -v "events.events.k8s.io" | grep -v "events" | sort | uniq); do
+    kubectl get -n ${1} --show-kind --ignore-not-found ${i}
+  done
 }

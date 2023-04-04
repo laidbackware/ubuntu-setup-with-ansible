@@ -1,0 +1,5 @@
+---
+- name: Copy Starship Config
+  copy:
+    src: starship.toml
+    dest: "{{ home_dir }}/.config/starship.toml"

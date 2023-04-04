@@ -66,10 +66,10 @@
 
     - role: shell/functions
       tags: ["shell-functions", "shell"]
+
+    - role: shell/starship
+      tags: ["starship"]
     
-    - role: shell/bashrc
-      tags: ["shell-bashrc", "shell"]
-  
     - role: asdf/install
       tags: ["asdf-install"]
 
@@ -86,6 +86,9 @@
 
     - role: flatpaks
       tags: ["flatpaks"]
+
+    - role: shell/bashrc
+      tags: ["shell-bashrc", "shell"]
 
     - role: dev/git-setup
       tags: ["git-setup"]

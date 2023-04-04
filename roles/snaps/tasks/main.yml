@@ -3,6 +3,7 @@
   community.general.snap:
     name: "{{ item.name }}"
     classic: "{{ item.classic | default(false) }}"
+    channel: "{{ item.channel | default(omit)}}"
   loop: "{{ snaps }}"
   become: true
 

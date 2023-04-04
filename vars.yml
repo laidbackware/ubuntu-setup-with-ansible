@@ -28,7 +28,6 @@ common_vars:
     - tree
     - jq
     - direnv
-    - golang-docker-credential-helpers
     - docker-compose
     - ssh
     - pssh
@@ -49,12 +48,12 @@ common_vars:
     - binfmt-support
     - qemu-user-static
 
-  deb_packages: # Can be removed
-    - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - https://zoom.us/client/latest/zoom_amd64.deb
-    - https://releases.hyper.is/download/deb
+  deb_packages: [] # Can be removed
+
   
-  snaps: []
+  snaps:
+    - name: starship
+      channel: edge
   flatpaks: []
 
 desktop_vars:
@@ -68,6 +67,7 @@ desktop_vars:
       key: CB2DE8E5
       name: onlyoffice
   apt_packages:
+    - golang-docker-credential-helpers
     - snapd
     - ulauncher
     - chrome-gnome-shell

@@ -12,5 +12,9 @@
       . $HOME/.bash_functions
       . $HOME/.bash_aliases
       . $HOME/.bash_secrets
+      export EDITOR=vim
+      
+      eval "$(starship init bash)"
+      eval "$(direnv hook bash)"
     insertbefore: EOF
     marker: '# {mark} ANSIBLE MANAGED BLOCK - .bash_'
