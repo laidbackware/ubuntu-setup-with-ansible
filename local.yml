@@ -66,9 +66,6 @@
 
     - role: shell/functions
       tags: ["shell-functions", "shell"]
-
-    - role: shell/starship
-      tags: ["starship"]
     
     - role: asdf/install
       tags: ["asdf-install"]
@@ -83,6 +80,9 @@
     
     - role: snaps
       tags: ["snaps"]
+
+    - role: shell/starship
+      tags: ["starship"]
 
     - role: flatpaks
       tags: ["flatpaks"]

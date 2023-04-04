@@ -1,4 +1,14 @@
 ---
+- name: Install Starship
+  ansible.builtin.shell:
+    cmd: |
+      curl -sS https://starship.rs/install.sh -o starship.sh -s
+      sh ./starship.sh -f
+    chdir: "{{ temp_dir }}"
+  become: true
+  timeout: 10
+
+
 - name: Copy Starship Config
   copy:
     src: starship.toml

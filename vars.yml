@@ -51,9 +51,7 @@ common_vars:
   deb_packages: [] # Can be removed
 
   
-  snaps:
-    - name: starship
-      channel: edge
+  snaps: []
   flatpaks: []
 
 desktop_vars:
