@@ -51,7 +51,8 @@ common_vars:
   deb_packages: [] # Can be removed
 
   
-  snaps: []
+  snaps:
+    - name: bw
   flatpaks: []
 
 desktop_vars:
@@ -92,6 +93,7 @@ desktop_vars:
     - gnome-software-plugin-flatpak
     - onlyoffice-desktopeditors
     - fonts-roboto
+    - gparted
 
   deb_packages:
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb

@@ -12,7 +12,9 @@
       . $HOME/.bash_functions
       . $HOME/.bash_aliases
       . $HOME/.bash_secrets
-      export EDITOR=vim
+      . "$HOME/.asdf/asdf.sh"
+      . "$HOME/.asdf/completions/asdf.bash"
+      export EDITOR=vimA new music
       
       eval "$(starship init bash)"
       eval "$(direnv hook bash)"

@@ -24,6 +24,8 @@ alias obe='eval "$(om bosh-env)"'
 
 alias ll='ls -la'
 
+alias vccd='vcc download -m vmd-manifest.yml --accepteula -o /home/matt/minio/vmware-products'
+
 alias tkgs-nsxt-on='ansible-playbook /home/matt/workspace/projects/vmware-lab-builder/deploy.yml --extra-vars "@./var-examples/tanzu/vsphere-nsxt/opinionated-1host.yml"'
 alias tkgs-nsxt-off='ansible-playbook /home/matt/workspace/projects/vmware-lab-builder/destroy.yml --extra-vars "@./var-examples/tanzu/vsphere-nsxt/opinionated-1host.yml"'
 alias tkgs-avi-on='ansible-playbook /home/matt/workspace/projects/vmware-lab-builder/deploy.yml --extra-vars "@./var-examples/tanzu/vsphere-vds-alb/opinionated-1host.yml"'
