@@ -47,6 +47,7 @@ common_vars:
     - qemu-kvm
     - binfmt-support
     - qemu-user-static
+    
 
   deb_packages: [] # Can be removed
 
@@ -94,6 +95,8 @@ desktop_vars:
     - onlyoffice-desktopeditors
     - fonts-roboto
     - gparted
+    - vagrant
+    - virtualbox
 
   deb_packages:
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb

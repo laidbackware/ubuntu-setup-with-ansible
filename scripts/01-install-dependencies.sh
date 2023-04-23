@@ -1,9 +1,10 @@
 #!/bin/bash
 
 echo -e "\nInstalling apt packages"
-sudo apt install python3-pip python-is-python3
+sudo apt install python3-pip python-is-python3 vim software-properties-common
 
 echo -e "\nInstalling Ansible"
+sudo rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 pip3 install ansible
 
 echo -e "\nInstalling bitwarden"
