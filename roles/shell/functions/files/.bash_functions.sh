@@ -13,6 +13,11 @@ function asdfu() {
     return 1
   fi
 
+  product_version=${2:-}
+  if [ -z $product_name ]; then
+    product_version=latest
+  fi
+
   asdf plugin add $product_name
   ret_code=$?
   if [ $ret_code -eq 2 ]; then
@@ -22,15 +27,18 @@ function asdfu() {
     return 1
   fi
 
-  asdf install $product_name latest
+  asdf install $product_name $product_version
   if [ $? -ne 0 ]; then
     >&2 echo "ERROR: Aborting"
     return 1
   fi
 
-  latest_version="$(asdf list $product_name | sed 's/\*//g' | sort -r | head -n 1 | xargs)" || return 1
-  echo "Setting ${latest_version} as global default for ${product_name}"
-  asdf global $product_name $latest_version
+  if [ "$product_version" == "latest" ]; then
+    product_version="$(asdf list $product_name | sed 's/\*//g' | sort -r | head -n 1 | xargs)" || return 1
+  fi
+  # latest_version="$(asdf list $product_name | sed 's/\*//g' | sort -r | head -n 1 | xargs)" || return 1
+  echo "Setting ${product_version} as global default for ${product_name}"
+  asdf global $product_name $product_version
 }
 
 function labon() {
