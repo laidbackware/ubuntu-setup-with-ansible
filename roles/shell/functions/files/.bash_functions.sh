@@ -109,6 +109,7 @@ function suspend_vm() {
 }
 
 function laboff() {
+  ( 
   # Ensure correct vars are set and error if not
   [ -z "${ESXI_IP:-}" ] && echo '$ESXI_IP must be set' && return 1
   [ -z "${ESXI_USERNAME:-}" ] && echo '$ESXI_USERNAME must be set' && return 1
@@ -117,6 +118,7 @@ function laboff() {
   export GOVC_USERNAME=$ESXI_USERNAME
   export GOVC_PASSWORD=$ESXI_PASSWORD
   export GOVC_INSECURE=true
+  unset GOVC_DATACENTER GOVC_HOST GOVC_DATASTORE GOVC_LIBRARY
   
   if $(curl -k --output /dev/null --silent --head --fail -m 1 https://${GOVC_URL}); then
     echo -e "Host ${GOVC_URL} is online. Shutting down\n"
@@ -171,6 +173,7 @@ function laboff() {
     fi
     govc host.shutdown "${host}"
   done
+  )
 }
 
 function tkgcli () {
