@@ -160,7 +160,7 @@ function laboff() {
     echo -e "\nSuspending VMs:\n ${vms_to_power_off_names}\n"
     govc vm.power -s -wait $vms_to_power_off
   else
-    echo -e "\nNo VMs to suspend"
+    echo -e "\nNo VMs to shutdown"
   fi
 
   # Shutdown hosts
