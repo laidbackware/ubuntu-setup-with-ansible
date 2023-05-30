@@ -129,43 +129,45 @@ chromebook_vars:
   snaps: []
   flatpaks: []
 
-asdf_plugins:
-  - name: "terraform"
-    versions:
-      - "0.15.5"
-      - "0.14.11"
-      - "0.13.7"
-    global: "0.15.5"
-  - name: "credhub"
-    versions:
-      - "2.9.0"
-    global: "2.9.0"
-  - name: "fly"
-    versions:
-      - "6.3.1"
-      - "7.0.0"
-    global: "0.15.5"
-  - name: "govc"
-    versions:
-      - "0.26.1"
-    global: "0.26.1"
-  - name: "kind"
-    versions:
-      - "0.11.1"
-    global: "0.11.1"
-  - name: "kubectl"
-    versions:
-      - "1.20.5"
-    global: "1.20.5"
-  - name: "kubectx"
-    versions:
-      - "0.9.4"
-    global: "0.9.4"
-  - name: "om"
-    versions:
-      - "7.3.1"
-    global: "7.3.1"
-  - name: "ytt"
-    versions:
-      - "0.36.0"
-    global: "0.36.0"
+asdf:
+  version: v0.11.3
+  asdf_plugins:
+    - name: "terraform"
+      versions:
+        - "0.15.5"
+        - "0.14.11"
+        - "0.13.7"
+      global: "0.15.5"
+    - name: "credhub"
+      versions:
+        - "2.9.0"
+      global: "2.9.0"
+    - name: "fly"
+      versions:
+        - "6.3.1"
+        - "7.0.0"
+      global: "0.15.5"
+    - name: "govc"
+      versions:
+        - "0.26.1"
+      global: "0.26.1"
+    - name: "kind"
+      versions:
+        - "0.11.1"
+      global: "0.11.1"
+    - name: "kubectl"
+      versions:
+        - "1.20.5"
+      global: "1.20.5"
+    - name: "kubectx"
+      versions:
+        - "0.9.4"
+      global: "0.9.4"
+    - name: "om"
+      versions:
+        - "7.3.1"
+      global: "7.3.1"
+    - name: "ytt"
+      versions:
+        - "0.36.0"
+      global: "0.36.0"

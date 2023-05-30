@@ -81,11 +81,9 @@ function labon() {
 
   echo -e "\nHost ${GOVC_URL} online!\n"
 
-  host="$(govc ls /ha-datacenter/host)"
+  local host="$(govc ls /ha-datacenter/host)"
 
   govc host.maintenance.exit ${host} || { echo 'Failed exiting maintenance' ; return 1; }
-
-  VMS="$(govc ls /ha-datacenter/vm)"
 
   # Suspect vCenter first to ensure vCLS doesn't get re-created
   govc vm.power -on -wait "/ha-datacenter/vm/vcsa7"
@@ -96,7 +94,7 @@ function labon() {
 }
 
 function suspend_vm() {
-  vm_path=$1
+  local vm_path=$1
   [ -z "${vm_path:-}" ] && echo 'A VM name must be passed as a parameter' && return 1
 
   # TODO handle VM not existing!
@@ -164,15 +162,13 @@ function laboff() {
   fi
 
   # Shutdown hosts
-  hosts="$(govc ls /ha-datacenter/host)"
-  for host in $hosts; do
-    if ! govc host.info $host |grep -i "Maintenance Mode"; then
-      govc host.maintenance.enter  $host
-    else
-      echo "Host ${host} is already in maintenance mode"
-    fi
-    govc host.shutdown "${host}"
-  done
+  local host="$(govc ls /ha-datacenter/host)"
+  if ! govc host.info $host |grep -i "Maintenance Mode"; then
+    govc host.maintenance.enter  $host
+  else
+    echo "Host ${host} is already in maintenance mode"
+  fi
+  govc host.shutdown "${host}"
   )
 }
 

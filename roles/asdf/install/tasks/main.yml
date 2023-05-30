@@ -11,6 +11,8 @@
   ansible.builtin.git:
     repo: "https://github.com/asdf-vm/asdf.git"
     dest: "{{ home_dir }}/.asdf"
+    single_branch: yes
+    version: "{{ asdf.version }}"
 
 - name: Add asdf to .bashrc
   ansible.builtin.blockinfile:
