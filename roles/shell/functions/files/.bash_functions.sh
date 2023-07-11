@@ -42,10 +42,12 @@ function asdfu() {
 }
 
 function labon() {
+  (
   # Ensure correct vars are set and error if not
   [ -z "${ESXI_IP:-}" ] && echo '$ESXI_IP must be set' && return 1
   [ -z "${ESXI_USERNAME:-}" ] && echo '$ESXI_USERNAME must be set' && return 1
   [ -z "${ESXI_PASSWORD:-}" ] && echo '$ESXI_PASSWORD must be set' && return 1
+  unset GOVC_DATACENTER GOVC_HOST GOVC_DATASTORE GOVC_LIBRARY
   export GOVC_URL=$ESXI_IP
   export GOVC_USERNAME=$ESXI_USERNAME
   export GOVC_PASSWORD=$ESXI_PASSWORD
@@ -91,6 +93,7 @@ function labon() {
   govc vm.power -on -wait "/ha-datacenter/vm/untangle"
 
   echo -e "\n Power on compelete"
+  )
 }
 
 function suspend_vm() {
