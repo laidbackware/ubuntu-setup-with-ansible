@@ -16,6 +16,7 @@ gnome:
     touchpad: "/org/gnome/desktop/peripherals/touchpad/"
   extensions:
     - id: 1160  # Dash-to-panel
+    - id: 5278  # clipboard manager
     # - id: 3628  # arc menu
 
 
@@ -95,8 +96,10 @@ desktop_vars:
     - onlyoffice-desktopeditors
     - fonts-roboto
     - gparted
-    - vagrant
     - virtualbox
+    - vagrant
+    - gir1.2-gda-5.0
+    - gir1.2-gsound-1.0
 
   deb_packages:
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -111,6 +114,7 @@ desktop_vars:
   flatpaks:
     - name: com.github.rajsolai.textsnatcher
     - name: com.slack.Slack
+    - name: org.nickvision.tubeconverter
 
 laptop_vars:
   apt_repositories: []
