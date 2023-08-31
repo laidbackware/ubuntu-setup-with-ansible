@@ -32,3 +32,5 @@ alias tkgs-avi-on='ansible-playbook /home/matt/workspace/projects/vmware-lab-bui
 alias tkgs-avi-off='ansible-playbook /home/matt/workspace/projects/vmware-lab-builder/destroy.yml --extra-vars "@./var-examples/tanzu/vsphere-vds-alb/opinionated-1host.yml"'
 alias tkgm-on='ansible-playbook /home/matt/workspace/projects/vmware-lab-builder/deploy.yml --extra-vars "@./var-examples/tanzu/multi-cloud/opinionated-1host.yml"'
 alias tkgm-off='ansible-playbook /home/matt/workspace/projects/vmware-lab-builder/destroy.yml --extra-vars "@./var-examples/tanzu/multi-cloud/opinionated-1host.yml"'
+
+alias au='sudo apt update && sudo apt upgrade'
