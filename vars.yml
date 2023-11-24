@@ -48,6 +48,7 @@ common_vars:
     - qemu-kvm
     - binfmt-support
     - qemu-user-static
+    - bat # rust cat replacementl
     
 
   deb_packages: [] # Can be removed

@@ -36,7 +36,6 @@ function asdfu() {
   if [ "$product_version" == "latest" ]; then
     product_version="$(asdf list $product_name | sed 's/\*//g' | sort -r | head -n 1 | xargs)" || return 1
   fi
-  # latest_version="$(asdf list $product_name | sed 's/\*//g' | sort -r | head -n 1 | xargs)" || return 1
   echo "Setting ${product_version} as global default for ${product_name}"
   asdf global $product_name $product_version
 }
