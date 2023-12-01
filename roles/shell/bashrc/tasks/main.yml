@@ -14,7 +14,7 @@
       . $HOME/.bash_secrets
       . "$HOME/.asdf/asdf.sh"
       . "$HOME/.asdf/completions/asdf.bash"
-      export EDITOR=vimA new music
+      export EDITOR=vim
       
       eval "$(starship init bash)"
       eval "$(direnv hook bash)"

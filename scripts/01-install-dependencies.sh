@@ -5,7 +5,7 @@ sudo apt install curl python3-pip python-is-python3 vim software-properties-comm
 
 echo -e "\nInstalling Ansible"
 sudo rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
-pip3 install ansible
+pip3 install ansible github3.py
 
 echo -e "\nInstalling bitwarden cli"
 sudo snap install bw

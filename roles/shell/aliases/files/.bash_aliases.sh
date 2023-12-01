@@ -5,6 +5,7 @@ alias kd='kubectl describe'
 alias kg='kubectl get'
 alias kgp='kubectl get pod'
 alias t='tanzu'
+alias tmc="tanzu mission-control"
 
 alias gb='git branch'
 alias gc='git checkout'

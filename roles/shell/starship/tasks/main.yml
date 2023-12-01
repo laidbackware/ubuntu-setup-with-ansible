@@ -1,4 +1,5 @@
 ---
+
 - name: Install Starship
   ansible.builtin.shell:
     cmd: |

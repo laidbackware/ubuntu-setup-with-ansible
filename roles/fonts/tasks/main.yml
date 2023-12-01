@@ -1,0 +1,12 @@
+---
+
+- name: Install Fonts
+  ansible.builtin.include_tasks: download-font.yml
+  vars:
+    github_user: "{{ item.github_user }}"
+    github_repo: "{{ item.github_repo }}"
+    file_name: "{{ item.file_name }}"
+  with_items: "{{ common_vars.fonts }}"
+
+- name: Update font cache
+  ansible.builtin.command: fc-cache -fv

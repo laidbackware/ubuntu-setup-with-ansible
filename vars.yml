@@ -49,14 +49,14 @@ common_vars:
     - binfmt-support
     - qemu-user-static
     - bat # rust cat replacementl
-    
-
   deb_packages: [] # Can be removed
-
-  
   snaps:
     - name: bw
   flatpaks: []
+  fonts:
+    - github_user: ryanoasis
+      github_repo: nerd-fonts
+      file_name: JetBrainsMono.tar.xz
 
 desktop_vars:
   apt_repositories:

@@ -81,6 +81,9 @@
     - role: snaps
       tags: ["snaps"]
 
+    - role: fonts
+      tags: ["fonts"]
+
     - role: shell/starship
       tags: ["starship"]
 

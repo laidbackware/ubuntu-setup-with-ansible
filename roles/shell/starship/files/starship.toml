@@ -51,6 +51,7 @@ error_symbol = "[✖](bold red) "
 
 [aws]
 disabled = true
+symbol = "  "
 
 [cmd_duration]
 min_time = 10_000
@@ -63,7 +64,7 @@ format = "[$path]($style)[$lock_symbol]($lock_style) "
 
 [git_branch]
 format = " [$symbol$branch]($style) "
-symbol = "🍣 "
+symbol = " "
 style = "bold yellow"
 
 [git_commit]
@@ -71,7 +72,7 @@ commit_hash_length = 8
 style = "bold white"
 
 [git_state]
-format = '[\($state( $progress_current of $progress_total)\)]($style) '
+format = '[\($state( $progress_current of $progress_total)\)]($style)'
 
 [git_status]
 conflicted = "⚔️ "
@@ -85,7 +86,9 @@ staged = "🗃️  ×${count}"
 renamed = "📛 ×${count}"
 deleted = "🗑️  ×${count}"
 style = "bright-white"
-format = "$all_status$ahead_behind"
+
+[golang]
+symbol = " "
 
 [hostname]
 ssh_only = false
@@ -93,3 +96,6 @@ format = "<[$hostname]($style)>"
 trim_at = "-"
 style = "bold dimmed white"
 disabled = true
+
+[python]
+symbol = " "

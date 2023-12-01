@@ -1,0 +1,19 @@
+---
+
+- name: Get latest release - {{ file_name }}
+  community.general.github_release:
+    user: "{{ github_user }}"
+    repo: "{{ github_repo }}"
+    action: latest_release
+  register: result_latest
+
+- name: Download - {{ file_name }}
+  ansible.builtin.get_url:
+    url: "https://github.com/{{ github_user }}/{{ github_repo }}/releases/download/{{ result_latest.tag }}/{{ file_name }}"
+    dest: "{{ temp_dir }}/{{ file_name }}"
+    mode: 0755
+
+- name: Extract font - {{ file_name }}
+  ansible.builtin.unarchive:
+    src: "{{ temp_dir }}/{{ file_name }}"
+    dest: "{{ home_dir }}/.local/share/fonts"
