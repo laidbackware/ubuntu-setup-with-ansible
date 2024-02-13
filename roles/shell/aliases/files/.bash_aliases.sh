@@ -4,6 +4,7 @@ alias kc='kubectl create'
 alias kd='kubectl describe'
 alias kg='kubectl get'
 alias kgp='kubectl get pod'
+alias ke='kubectl explain'
 alias t='tanzu'
 alias tmc="tanzu mission-control"
 
