@@ -1,0 +1,5 @@
+---
+- name: Copy bash_completion
+  copy:
+    src: .bash_completion.sh
+    dest: "{{ home_dir }}/.bash_completion"

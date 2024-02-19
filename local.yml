@@ -64,6 +64,9 @@
     - role: shell/aliases
       tags: ["shell-aliases", "shell"]
 
+    - role: shell/completion
+      tags: ["shell-completion", "shell"]
+
     - role: shell/functions
       tags: ["shell-functions", "shell"]
     

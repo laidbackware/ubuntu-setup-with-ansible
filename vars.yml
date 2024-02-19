@@ -52,6 +52,7 @@ common_vars:
   deb_packages: [] # Can be removed
   snaps:
     - name: bw
+    - name: yq
   flatpaks: []
   fonts:
     - github_user: ryanoasis
