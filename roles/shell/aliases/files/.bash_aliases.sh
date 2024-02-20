@@ -7,6 +7,7 @@ alias kgp='kubectl get pod'
 alias ke='kubectl explain'
 alias kl='kubectl logs'
 alias kdel='kubectl delete'
+alias kapi='kubectl api-resources'
 alias t='tanzu'
 alias tmc="tanzu mission-control"
 
