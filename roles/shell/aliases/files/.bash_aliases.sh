@@ -9,6 +9,8 @@ alias kl='kubectl logs'
 alias kdel='kubectl delete'
 alias kapi='kubectl api-resources'
 alias t='tanzu'
+alias tpi='tanzu package installed'
+alias tpil='tanzu package installed list'
 alias tmc="tanzu mission-control"
 
 alias gb='git branch'
