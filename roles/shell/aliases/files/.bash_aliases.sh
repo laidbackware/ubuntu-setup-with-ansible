@@ -24,7 +24,7 @@ alias ssh-fix='eval `ssh-agent` ; ssh-add ~/.ssh/git_key'
 alias kns=kubens
 alias kx=kubectx
 
-alias harold='ssh matt@192.168.0.5'
+alias derek='ssh matt@192.168.0.3'
 
 alias pssh="parallel-ssh  -h hosts -i"
 

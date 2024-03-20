@@ -16,7 +16,7 @@ gnome:
     touchpad: "/org/gnome/desktop/peripherals/touchpad/"
   extensions:
     - id: 1160  # Dash-to-panel
-    - id: 5278  # clipboard manager
+    - id: 5278  # clipboard manger
     # - id: 3628  # arc menu
 
 
@@ -111,8 +111,11 @@ desktop_vars:
     - name: inkscape
     - name: powershell-preview
       classic: true
+    - name: node
+      classic: true
     - name: btop
     - name: hugo
+    - name: plex-desktop
   flatpaks:
     - name: com.github.rajsolai.textsnatcher
     - name: com.slack.Slack
