@@ -87,7 +87,7 @@ function labon() {
   govc host.maintenance.exit ${host} || { echo 'Failed exiting maintenance' ; return 1; }
 
   # Suspect vCenter first to ensure vCLS doesn't get re-created
-  govc vm.power -on -wait "/ha-datacenter/vm/vcsa7"
+  govc vm.power -on -wait "/ha-datacenter/vm/vcsa8"
   # Suspect untangle router
   govc vm.power -on -wait "/ha-datacenter/vm/untangle"
 
@@ -128,7 +128,7 @@ function laboff() {
   fi
 
   # Suspend vCenter first to ensure vCLS doesn't get re-created
-  suspend_vm "/ha-datacenter/vm/vcsa7"
+  suspend_vm "/ha-datacenter/vm/vcsa8"
   # Suspend untangle router
   suspend_vm "/ha-datacenter/vm/untangle"
 

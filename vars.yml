@@ -62,7 +62,7 @@ common_vars:
 desktop_vars:
   apt_repositories:
     - ppa:papirus/papirus
-    - ppa:agornostal/ulauncher
+    # - ppa:agornostal/ulauncher
     - ppa:solaar-unifying/stable
     - deb [signed-by=/etc/apt/trusted.gpg.d/onlyoffice.gpg] https://download.onlyoffice.com/repo/debian squeeze main
   gpg_keys:
@@ -72,7 +72,7 @@ desktop_vars:
   apt_packages:
     - golang-docker-credential-helpers
     - snapd
-    - ulauncher
+    # - ulauncher
     - chrome-gnome-shell
     - gnome-tweaks
     - gettext
@@ -100,8 +100,8 @@ desktop_vars:
     - gparted
     - virtualbox
     - vagrant
-    - gir1.2-gda-5.0
-    - gir1.2-gsound-1.0
+    # - gir1.2-gda-5.0
+    # - gir1.2-gsound-1.0
 
   deb_packages:
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -114,11 +114,11 @@ desktop_vars:
     - name: node
       classic: true
     - name: btop
-    - name: hugo
+    # - name: hugo
     - name: plex-desktop
   flatpaks:
     - name: com.github.rajsolai.textsnatcher
-    - name: com.slack.Slack
+    # - name: com.slack.Slack
     - name: org.nickvision.tubeconverter
 
 laptop_vars:
