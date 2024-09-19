@@ -14,7 +14,7 @@ function asdfu() {
   fi
 
   product_version=${2:-}
-  if [ -z $product_name ]; then
+  if [ -z $product_version ]; then
     product_version=latest
   fi
 
@@ -77,8 +77,10 @@ function labon() {
     attempt_counter=$(expr ${attempt_counter} + 1)
     local current_try=$(expr ${max_attempts} - ${attempt_counter})
     echo "Host ${GOVC_URL} not online yet, ${current_try} more retries left"
-    sleep 5
+    sleep 2
   done
+
+  sleep 5
 
   echo -e "\nHost ${GOVC_URL} online!\n"
 

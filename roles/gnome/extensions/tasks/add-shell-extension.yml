@@ -20,7 +20,7 @@
     state: directory
     mode: '0755'
 
-- name: "Extract {{ item.name }} to extensions dir"
+- name: "Extract to extensions dir {{ item.name }}"
   ansible.builtin.unarchive:
     src: "{{ temp_dir }}/{{ extension_name }}.zip"
     dest: "{{ home_dir }}/.local/share/gnome-shell/extensions/{{ extension_name }}/"

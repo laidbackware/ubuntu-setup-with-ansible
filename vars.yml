@@ -14,11 +14,10 @@ gnome:
     mouse: "/org/gnome/desktop/peripherals/mouse/"
     power: "/org/gnome/settings-daemon/plugins/power/"
     touchpad: "/org/gnome/desktop/peripherals/touchpad/"
+    wm: "/org/gnome/desktop/wm/preferences/"
   extensions:
     - id: 1160  # Dash-to-panel
-    - id: 5278  # clipboard manger
-    # - id: 3628  # arc menu
-
+    # - id: 5278  # clipboard manger
 
 common_vars:
   apt_repositories: []
@@ -62,7 +61,6 @@ common_vars:
 desktop_vars:
   apt_repositories:
     - ppa:papirus/papirus
-    # - ppa:agornostal/ulauncher
     - ppa:solaar-unifying/stable
     - deb [signed-by=/etc/apt/trusted.gpg.d/onlyoffice.gpg] https://download.onlyoffice.com/repo/debian squeeze main
   gpg_keys:
@@ -72,7 +70,6 @@ desktop_vars:
   apt_packages:
     - golang-docker-credential-helpers
     - snapd
-    # - ulauncher
     - chrome-gnome-shell
     - gnome-tweaks
     - gettext
@@ -99,9 +96,10 @@ desktop_vars:
     - fonts-roboto
     - gparted
     - virtualbox
-    - vagrant
-    # - gir1.2-gda-5.0
-    # - gir1.2-gsound-1.0
+    - openconnect
+    - network-manager-openconnect
+    - network-manager-openconnect-gnome
+    # - vagrant
 
   deb_packages:
     - https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -114,11 +112,9 @@ desktop_vars:
     - name: node
       classic: true
     - name: btop
-    # - name: hugo
     - name: plex-desktop
   flatpaks:
     - name: com.github.rajsolai.textsnatcher
-    # - name: com.slack.Slack
     - name: org.nickvision.tubeconverter
 
 laptop_vars:
@@ -139,44 +135,44 @@ chromebook_vars:
   flatpaks: []
 
 asdf:
-  version: v0.11.3
+  version: v0.14.1
   asdf_plugins:
-    - name: "terraform"
-      versions:
-        - "0.15.5"
-        - "0.14.11"
-        - "0.13.7"
-      global: "0.15.5"
-    - name: "credhub"
-      versions:
-        - "2.9.0"
-      global: "2.9.0"
-    - name: "fly"
-      versions:
-        - "6.3.1"
-        - "7.0.0"
-      global: "0.15.5"
-    - name: "govc"
-      versions:
-        - "0.26.1"
-      global: "0.26.1"
-    - name: "kind"
-      versions:
-        - "0.11.1"
-      global: "0.11.1"
-    - name: "kubectl"
-      versions:
-        - "1.20.5"
-      global: "1.20.5"
-    - name: "kubectx"
-      versions:
-        - "0.9.4"
-      global: "0.9.4"
-    - name: "om"
-      versions:
-        - "7.3.1"
-      global: "7.3.1"
-    - name: "ytt"
-      versions:
-        - "0.36.0"
-      global: "0.36.0"
+    # - name: "terraform"
+    #   versions:
+    #     - "0.15.5"
+    #     - "0.14.11"
+    #     - "0.13.7"
+    #   global: "0.15.5"
+    # - name: "credhub"
+    #   versions:
+    #     - "2.9.0"
+    #   global: "2.9.0"
+    # - name: "fly"
+    #   versions:
+    #     - "6.3.1"
+    #     - "7.0.0"
+    #   global: "0.15.5"
+    # - name: "govc"
+    #   versions:
+    #     - "0.26.1"
+    #   global: "0.26.1"
+    # - name: "kind"
+    #   versions:
+    #     - "0.11.1"
+    #   global: "0.11.1"
+    # - name: "kubectl"
+    #   versions:
+    #     - "1.20.5"
+    #   global: "1.20.5"
+    # - name: "kubectx"
+    #   versions:
+    #     - "0.9.4"
+    #   global: "0.9.4"
+    # - name: "om"
+    #   versions:
+    #     - "7.3.1"
+    #   global: "7.3.1"
+    # - name: "ytt"
+    #   versions:
+    #     - "0.36.0"
+    #   global: "0.36.0"

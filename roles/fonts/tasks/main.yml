@@ -1,5 +1,10 @@
 ---
 
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ home_dir }}/.local/share/fonts"
+    state: directory
+
 - name: Install Fonts
   ansible.builtin.include_tasks: download-font.yml
   vars:

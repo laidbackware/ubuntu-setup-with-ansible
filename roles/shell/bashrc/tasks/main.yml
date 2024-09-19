@@ -11,7 +11,7 @@
     block: |
       . $HOME/.bash_functions
       . $HOME/.bash_aliases
-      . $HOME/.bash_complation
+      . $HOME/.bash_completion
       . $HOME/.bash_secrets
       . "$HOME/.asdf/asdf.sh"
       . "$HOME/.asdf/completions/asdf.bash"

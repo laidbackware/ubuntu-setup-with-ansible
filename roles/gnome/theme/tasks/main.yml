@@ -53,8 +53,8 @@
 - name: Load Gnome theme settings 
   become_user: "{{ user }}"
   shell: |-
-    dconf reset -f /org/gnome/shell/extensions/desktop/interface/
-    dconf load /org/gnome/shell/extensions/desktop/interface/ < {{ temp_dir }}/desktop.conf
+    dconf reset -f /org/gnome/desktop/interface/
+    dconf load /org/gnome/desktop/interface/ < {{ temp_dir }}/desktop.conf
 
     dconf load /org/gnome/shell/extensions/user-theme/ < {{ temp_dir }}/user-theme.conf
 
