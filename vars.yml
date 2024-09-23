@@ -113,6 +113,7 @@ desktop_vars:
       classic: true
     - name: btop
     - name: plex-desktop
+    - name: cameractrls
   flatpaks:
     - name: com.github.rajsolai.textsnatcher
     - name: org.nickvision.tubeconverter

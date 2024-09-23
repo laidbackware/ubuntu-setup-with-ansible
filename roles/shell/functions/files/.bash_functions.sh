@@ -137,42 +137,42 @@ function laboff() {
   local vms=$(govc ls /ha-datacenter/vm)
 
   # Power off vCLS VMs
-  local vcls_vms=$(echo "$vms" |grep "vCLS")
-  for vm in "${vcls_vms}"; do
-    local vcls_vm_state="$(govc vm.info ${vm})"
-    local vm_name=$(echo "${vcls_vm_state}" |grep -i "Name:           " |sed s'/Name:           //')
-    if [[ "${vcls_vm_state}" == *"poweredOn"* ]]; then
-      echo -e "Terminating vCLS VM ${vm_name}"
-      govc vm.power -off -wait $(echo "${vcls_vm_state}" |grep -i "Path:         " |sed s'/  Path:         //')
+  local VCLS_VMS=$(echo "$vms" |grep "vCLS")
+  for vm in "${VCLS_VMS}"; do
+    local VCLS_VM_STATE="$(govc vm.info ${vm})"
+    local VM_NAME=$(echo "${VCLS_VM_STATE}" |grep -i "Name:           " |sed s'/Name:           //')
+    if [[ "${VCLS_VM_STATE}" == *"poweredOn"* ]]; then
+      echo -e "Terminating vCLS VM ${VM_NAME}"
+      govc vm.power -off -wait $(echo "${VCLS_VM_STATE}" |grep -i "Path:         " |sed s'/  Path:         //')
     else
-      echo -e "vCLS VM ${vm_name} already powered off"
+      echo -e "vCLS VM ${VM_NAME} already powered off"
     fi
   done
 
   # Shuddown VMs
-  local vms_to_power_off=""
-  for vm in $vms; do
-    local vm_state=$(govc vm.info "${vm}")
-    if [[ "${vm_state}" == *"poweredOn"* ]]; then
-      vms_to_power_off="${vms_to_power_off} $(echo "${vm_state}" |grep -i "Path:         " | sed s'/  Path:         //')"
+  local VMS_TO_POWER_OFF=""
+  for VM in $VMS; do
+    local VM_STATE=$(govc vm.info "${VM}")
+    if [[ "${VM_STATE}" == *"poweredOn"* ]]; then
+      VMS_TO_POWER_OFF="${VMS_TO_POWER_OFF} $(echo "${VM_STATE}" |grep -i "Path:         " | sed s'/  Path:         //')"
     fi
   done
-  if [ ! -z "${vms_to_power_off}" ]; then
-    local vms_to_power_off_names=$(echo "${vms_to_power_off}" | sed  s'/\/ha-datacenter\/vm\///'g)
-    echo -e "\nSuspending VMs:\n ${vms_to_power_off_names}\n"
-    govc vm.power -s -wait $vms_to_power_off
+  if [ ! -z "${VMS_TO_POWER_OFF}" ]; then
+    local VMS_TO_POWER_OFF_names=$(echo "${VMS_TO_POWER_OFF}" | sed  s'/\/ha-datacenter\/vm\///'g)
+    echo -e "\nSuspending VMs:\n ${VMS_TO_POWER_OFF_names}\n"
+    govc vm.power -s -wait $VMS_TO_POWER_OFF
   else
     echo -e "\nNo VMs to shutdown"
   fi
 
   # Shutdown hosts
-  local host="$(govc ls /ha-datacenter/host)"
-  if ! govc host.info $host |grep -i "Maintenance Mode"; then
-    govc host.maintenance.enter  $host
+  local HOST="$(govc ls /ha-datacenter/host)"
+  if ! govc host.info $HOST |grep -i "Maintenance Mode"; then
+    govc host.maintenance.enter  $HOST
   else
-    echo "Host ${host} is already in maintenance mode"
+    echo "Host ${HOST} is already in maintenance mode"
   fi
-  govc host.shutdown "${host}"
+  govc host.shutdown "${HOST}"
   )
 }
 
@@ -196,6 +196,52 @@ function tkgcli () {
   mv "$cli" "$HOME/.local/bin/tanzu"
   tanzu plugin clean
   tanzu init
+}
+
+function tason() {
+  (
+  # Ensure correct vars are set and error if not
+  [ -z "${ESXI_IP:-}" ] && echo '$ESXI_IP must be set' && return 1
+  [ -z "${ESXI_USERNAME:-}" ] && echo '$ESXI_USERNAME must be set' && return 1
+  [ -z "${ESXI_PASSWORD:-}" ] && echo '$ESXI_PASSWORD must be set' && return 1
+  unset GOVC_DATACENTER GOVC_HOST GOVC_DATASTORE GOVC_LIBRARY
+  export GOVC_URL=$ESXI_IP
+  export GOVC_USERNAME=$ESXI_USERNAME
+  export GOVC_PASSWORD=$ESXI_PASSWORD
+  export GOVC_INSECURE=true
+
+  # Power up opsman
+  govc vm.power -on "/ha-datacenter/vm/tas-direct-ops-manager"
+
+  # Power on Bosh managed VMs
+  local VMS="$(govc ls /ha-datacenter/vm/vm-*)"
+  govc vm.power -on -wait $VMS
+
+  echo -e "\nTAS on compelete - check Bosh for state"
+  )
+}
+
+function tasoff() {
+  (
+  # Ensure correct vars are set and error if not
+  [ -z "${ESXI_IP:-}" ] && echo '$ESXI_IP must be set' && return 1
+  [ -z "${ESXI_USERNAME:-}" ] && echo '$ESXI_USERNAME must be set' && return 1
+  [ -z "${ESXI_PASSWORD:-}" ] && echo '$ESXI_PASSWORD must be set' && return 1
+  unset GOVC_DATACENTER GOVC_HOST GOVC_DATASTORE GOVC_LIBRARY
+  export GOVC_URL=$ESXI_IP
+  export GOVC_USERNAME=$ESXI_USERNAME
+  export GOVC_PASSWORD=$ESXI_PASSWORD
+  export GOVC_INSECURE=true
+
+  # Power off opsman
+  govc vm.power -off "/ha-datacenter/vm/tas-direct-ops-manager"
+
+  # Power on Bosh managed VMs
+  local VMS="$(govc ls /ha-datacenter/vm/vm-*)"
+  govc vm.power -off -wait $VMS
+
+  echo -e "\nTAS off compelete"
+  )
 }
 
 function kga {
