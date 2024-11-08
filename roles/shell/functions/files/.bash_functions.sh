@@ -134,12 +134,12 @@ function laboff() {
   # Suspend untangle router
   suspend_vm "/ha-datacenter/vm/untangle"
 
-  local vms=$(govc ls /ha-datacenter/vm)
+  local VMS=$(govc ls /ha-datacenter/vm)
 
   # Power off vCLS VMs
-  local VCLS_VMS=$(echo "$vms" |grep "vCLS")
-  for vm in "${VCLS_VMS}"; do
-    local VCLS_VM_STATE="$(govc vm.info ${vm})"
+  local VCLS_VMS=$(echo "$VMS" |grep "vCLS")
+  for VM in "${VCLS_VMS}"; do
+    local VCLS_VM_STATE="$(govc vm.info ${VM})"
     local VM_NAME=$(echo "${VCLS_VM_STATE}" |grep -i "Name:           " |sed s'/Name:           //')
     if [[ "${VCLS_VM_STATE}" == *"poweredOn"* ]]; then
       echo -e "Terminating vCLS VM ${VM_NAME}"
@@ -158,8 +158,8 @@ function laboff() {
     fi
   done
   if [ ! -z "${VMS_TO_POWER_OFF}" ]; then
-    local VMS_TO_POWER_OFF_names=$(echo "${VMS_TO_POWER_OFF}" | sed  s'/\/ha-datacenter\/vm\///'g)
-    echo -e "\nSuspending VMs:\n ${VMS_TO_POWER_OFF_names}\n"
+    local VMS_TO_POWER_OFF_NAMES=$(echo "${VMS_TO_POWER_OFF}" | sed  s'/\/ha-datacenter\/vm\///'g)
+    echo -e "\nSuspending VMs:\n ${VMS_TO_POWER_OFF_NAMES}\n"
     govc vm.power -s -wait $VMS_TO_POWER_OFF
   else
     echo -e "\nNo VMs to shutdown"
@@ -214,8 +214,25 @@ function tason() {
   govc vm.power -on "/ha-datacenter/vm/tas-direct-ops-manager"
 
   # Power on Bosh managed VMs
-  local VMS="$(govc ls /ha-datacenter/vm/vm-*)"
-  govc vm.power -on -wait $VMS
+  local VMS="/ha-datacenter/vm/tas-direct-ops-managerz\n$(govc ls /ha-datacenter/vm/vm-*)"
+
+  local VMS_TO_POWER_ON=""
+  for VM in $VMS; do
+    local VM_STATE=$(govc vm.info "${VM}")
+    if [[ "${VM_STATE}" != *"poweredOn"* ]]; then
+      VMS_TO_POWER_ON="${VMS_TO_POWER_ON} $(echo "${VM_STATE}" |grep -i "Path:         " | sed s'/  Path:         //')"
+    fi
+  done
+  if [ ! -z "${VMS_TO_POWER_ON}" ]; then
+    local VMS_TO_POWER_ON_NAMES=$(echo "${VMS_TO_POWER_ON}" | sed  s'/\/ha-datacenter\/vm\///'g)
+    echo -e "\Powering on VMs:\n ${VMS_TO_POWER_ON_NAMES}\n"
+    govc vm.power -s -wait $VMS_TO_POWER_ON
+  else
+    echo -e "\nNo VMs to power on"
+  fi
+
+  # local VMS="$(govc ls /ha-datacenter/vm/vm-*)"
+  # govc vm.power -on -wait $VMS
 
   echo -e "\nTAS on compelete - check Bosh for state"
   )

@@ -20,14 +20,15 @@
 - debug: var=extensions
 - debug: var=extenstions_changed
 
-- name: Restart Gnome Shell to load extensions if changed
-  ansible.builtin.command:
-    cmd: killall -3 gnome-shell
-  when: not extenstions_changed
+# removing gnome restart due to Wayland 
+# - name: Restart Gnome Shell to load extensions if changed
+#   ansible.builtin.command:
+#     cmd: killall -3 gnome-shell
+#   when: not extenstions_changed
 
-- name: Pause for 20 seconds to allow Gnome to restart
-  ansible.builtin.pause:
-    seconds: 20
+# - name: Pause for 20 seconds to allow Gnome to restart
+#   ansible.builtin.pause:
+#     seconds: 20
 
 # Possibly not needed as extensions install enabled
 - name: Enable extensions

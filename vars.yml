@@ -28,7 +28,7 @@ common_vars:
     - tree
     - jq
     - direnv
-    - docker-compose
+    # - docker-compose
     - ssh
     - pssh
     - cifs-utils
@@ -48,6 +48,7 @@ common_vars:
     - binfmt-support
     - qemu-user-static
     - bat # rust cat replacementl
+    - kubectx
   deb_packages: [] # Can be removed
   snaps:
     - name: bw
